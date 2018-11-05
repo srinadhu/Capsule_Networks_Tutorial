@@ -2,6 +2,26 @@
 layout: default
 ---
 
+# Introduction
+
+Deep Convolutional Neural Networks are present state of the art in lot of tasks like classification, localization, segmentation, etc to name a few. 
+In deep learning, the activation of a neuron can be interpreted as possibility of that feature being detected. CNN’s are excellent at detecting features but are less effective at learning good hierarchical relationship of features. To make the idea more clear take a look at this picture 
+
+	                                                ![face](./images/face.jpg)
+
+Say we are doing an image classification task of human vs no-humans, a well trained CNN might say the above picture is human, why does it might say so?. When CNN looks at the image the neurons associated with detection of nose, mouth, eyes will all get activated. These activated neurons will activate the face detector neuron and leading CNN to wrongly classify above image as human. 
+
+Suppose at each neuron say we have more information of feature detected like size, pose, etc it would help model in correctly solving artificially created examples like above for that task. The technical term used for this is **capsules** i.e. which outputs a vector instead of a scalar like neuron.
+
+
+
+
+
+# References
+
+[Understanding Dynamic Routing between Capsules (Capsule Networks)] (https://jhui.github.io/2017/11/03/Dynamic-Routing-Between-Capsules/)
+
+
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
 [Link to another page](./another-page.html).
