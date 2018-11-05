@@ -19,7 +19,7 @@ Suppose at each neuron say we have more information of feature detected like siz
 
 # References
 
-![Understanding Dynamic Routing between Capsules](https://jhui.github.io/2017/11/03/Dynamic-Routing-Between-Capsules/)
+[Understanding Dynamic Routing between Capsules](https://jhui.github.io/2017/11/03/Dynamic-Routing-Between-Capsules/)
 
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
