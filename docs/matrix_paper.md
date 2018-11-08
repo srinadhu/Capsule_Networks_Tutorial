@@ -1,15 +1,15 @@
 ---
 layout: default
 ---
-
-# CNN Short-coming
+# Introduction
+## CNN Short-coming
 In the introduction section of [the previous atricle](./routing_paper.html) we described the short-comings of CNN. Let's recap some of them.
 
 To handle the different variants of objects, e.g. different orientations of face, we need to add more neurons and layers to the network. It also requires large dataset to incorporate multiple variants of object. MNist dataset contains 5500 samples per digit. Human brain do not need that many samples to learn recognizing digits.
 
 CNN is also vulnerable to adversaires by simple move, rotate or resize individual feature, as they do not uses spacial relations between this features. Via, adding small noise to the original image we can generate images that are undistiguisable by human eyes and fools a CNN network.
 
-# Capsule
+## Capsule
 
 A capsule captures the likeliness of feature and its variant. So it does not only detect a feature, but its variants as well. 
 
@@ -21,7 +21,7 @@ e.g. the same network can detect a face rotated my 20$^\circ$ clockwise as well 
 
 Equivariance is the detection of objects that can transform to each other. Unlike CNNs, the capsule network detects that the face is rotaed clockwise 20$^\circ$ rather than just detecting the face. Since the same capsule is trained to learn the feature variant rather than feature only, it needs less data and also a smaller network is sufficient. For euivariance, it's needed to keep spacial information of feature inside neuron, which  also helps to prevent adversarial attacks.
 
-# Matrix capsule
+## Matrix capsule
 
 A matrix capsule captures the activation(likeliness) as well as a 4x4 pose matrix, which stores translation and rotation information of an object. e.g. the image below shows different objects from different viewpoints, which shows the pose information asentially represents viepoint of the feature.
 
