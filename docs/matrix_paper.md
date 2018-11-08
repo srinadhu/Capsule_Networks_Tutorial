@@ -30,12 +30,12 @@ A matrix capsule captures the activation(likeliness) as well as a 4x4 pose matri
 # Methodology
 
 Simillar to the previous paper, here as also capsules have two main features:
-* Transformation matrix *
+## Transformation matrix
 We use a viwpoint invariant 4x4 transformation matrix that is used to generate votes for the pose matrix of the higher layer capsule from the lower layer capsule.
 
 In the face detection example, each of the lower layer capsules namely mouth, eyes and nose capsules make predictions about the pose matrix of the higher layer capsule, i.e. face capsule. A vote matrix is the predicted value of pose matrix of the face capsule, which is computed by multiplying the lower layer capsule's pose matrix with a transformation matrix, which is learnt using standard backpropogation.
 
-* Routing *
+## Routing
 For matrix capsule, EM routing machanism is used to find the pose matrix of a capsule from the vote matrices, in which we use the standard clustering technique EM(Expectation-maximization). EM clustering is used to cluster datapoints into Gaussian distributions.
 
 
