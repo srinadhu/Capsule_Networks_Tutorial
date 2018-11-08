@@ -4,8 +4,9 @@ layout: default
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
-[Link to another page](./routing_paper.html).
-[Link to another page](./matrix_paper.html).
+[Dynamic Routing between Capsules](./routing_paper.html).
+
+[Matrix Capsules with EM routing](./matrix_paper.html).
 
 There should be whitespace between paragraphs.
 
