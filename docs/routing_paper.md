@@ -33,11 +33,7 @@ We want the length of the output vector to represent the probability of feature.
 
 ![squash](./images/squash.png)
 
-Except the first layer of capsules, the total input to a capsule $s_j$ is a weighted sum over all prediction vectors 
-$u\^{^}_j|i$ from the capsules in the layer below and is produced by multiplying the
-output $u_i$ of a capsule in the layer below by a weight matrix 
-$W_{ij}$ 
-$e^{i\pi} + 1 = 0$
+![rt](./images/rt.png)
 
 
 Capsules have two main features as described below:
