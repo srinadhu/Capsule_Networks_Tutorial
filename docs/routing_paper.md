@@ -33,23 +33,14 @@ We want the length of the output vector to represent the probability of feature.
 
 ![squash](./images/squash.png)
 
+
+For finding the input to higher layer capsules, we first calculate prediction vectors then do weighted sum of prediction vectors with coupling coefficients. Let's look at capsule j in an layer L and let's look at capsule i in layer L-1. We have a weight matrix between i and j called Wij which will be learned by backpropagation. For calculating the prediction vector between i and j multiply Wij by output of capsule i. We also have coupling coefficients for all i,j pairs, we then do the weighted sum with coupling factors as weights over all i to j, resulting in input vector to capsule j. We will look at coupling coefficients shortly.     
+
 ![rt](./images/rt.png)
 
-
-Capsules have two main features as described below:
-Transformation matrix
-As discussed in the introduction section, while finding the output of higher layer capsules, we first predict it using lower layer capsules using a viewpoint invariant transformation matrix. for all the capsules in the lower layer, we multiply the transformation matrix with the output of the capsule to get a vote for the higher layer capsule. This matrix is learnt using backpropagation.
-E.g. Let’s assume we have two 1D capsules representing the width of mouth and left eye and Wm=2, We=3, and we calculate votes for face capsule from the mouth and the eye capsule as:
-Vm=Wm×widthm=2×100=200 and Ve=We×widthe=3×66=198
-
-Dynamic routing
-Once we have the votes for the higher layer capsule from all the lower layer capsules, we find the true output, via a routing mechanism in which it analyses all the votes and gets them the most probable output. The sparsity of the votes leads to the low confidence of the capsule output, which is represented as a lower norm of the output vector.
-
-Here, the vector Vj is the output of the higher layer capsule, which is getting updated iteratively. Vj is computed by taking a weighted sum of the votes from lower layer capsules, where the weighted Cij are also getting updated in each iteration. We are starting with equal weights and after computing Vj, we increase the weight to the more accurate votes and decrease the weights to the less accurate ones.
-
-
 Since here we are predicting the higher layer capsule output using the lower layer ones, the votes will get transformed with the same transformation we applied to the image, and since all the votes are going through the same transformation as shown in the figure above, it will not affect the classification probability.
-While in the case of deformed face the transformation of votes from the ideal face-votes will be different across the different features, which will reduce the norm of the output vector of higher layer capsules and hence the classification probability.
+While in the case of deformed face the transformation of votes from the ideal face-votes will be different across the different features, which will reduce the norm of the output vector of higher layer capsules and hence the classification probability. The coupling coefficients between capsule i and all the capsules in the layer above sum to 1.
+
 
 
 
