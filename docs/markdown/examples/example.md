@@ -13,6 +13,8 @@ This is a text paragraph containing an ellipsis ... and followed by a horizontal
 
 ***
 
+$\beta_a$
+
 This is inline `code`. This is a [link](http://google.cz "Google").  _This is an *emphasized* span of text_. __This is a **strongly emphasized** span of text__.
 
   ![example image](example-image.pdf "An example image from Martin Scharrer's mwe package")
