@@ -1,9 +1,0 @@
-\def\markdownOptionCodeSpans{false}
-<<<
-This test ensures that the Lua `codeSpans` option correctly propagates through
-the plain TeX interface.
-
-``This is a quote.''
-``This is another one.''
->>>
-interblockSeparator

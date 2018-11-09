@@ -1,8 +1,0 @@
-<<<
-[hi `there] bud`](/url)
->>>
-BEGIN link
-- label: hi (codeSpan: there] bud)
-- URI: /url
-- title: 
-END link
