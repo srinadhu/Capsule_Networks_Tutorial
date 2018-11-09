@@ -107,6 +107,6 @@ They tested the CapsNet on CIFAR-10 and achieved 10.6% error with an ensemble of
 
 # Contact 
 
-For anything related to this please contact **Sai Srinadhu K** at 2015csb1015@iitrpr.ac.in. I will be more than happy to help you out.  
+For anything related to this please contact **Sai Srinadhu K** at ``2015csb1015@iitrpr.ac.in`` I will be more than happy to help you out.  
 
-[back](./)
+[<-back](./)
