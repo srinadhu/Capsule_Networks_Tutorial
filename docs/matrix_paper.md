@@ -52,6 +52,5 @@ $$R_{ij} = \frac{a_j P_{i|j}}{\sum{u \in \omega_{L+1}a_u P_{i|u}}$$
 Here we compute the mean, variance and activation in M-step, while the assignment probabilities in E-step and update them iteratively, which leads to the final activation and pose matrix.
 
 
-_yay_
 
-[back](./)
+[<-back](./)
