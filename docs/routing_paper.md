@@ -19,7 +19,7 @@ Equivariance mean internal representation captures the properties of the object.
 
 ![eq](./images/eq.jpg)
 
-A capsule network shares the same capsule to detect multiple variants as above. As Capsules for lower level objects (i.e. eyes, mouth, nose, etc) stores the spatial information and using a viewpoint invariant transformation generate the same for the higher level objects, it needs one capsule for all the variants of features as well as less data to get trained. In the normal CNN's the features are represented by a single neuron (single dimension) where in capsules are by a vector (atleast 2 dimensions) and so the internal representation might capture the properties of the object, leading to equivariance. 
+A capsule network shares the same capsule to detect multiple variants as above. As Capsules for lower level objects (i.e. eyes, mouth, nose, etc) stores the spatial information and using a viewpoint invariant transformation generate the same for the higher level objects, it needs one capsule for all the variants of features as well as less data to get trained. In the normal CNN's the features are represented by a single neuron (single dimension) where in capsules are by a vector (atleast 2 dimensions). In computer graphics, we have an object and instantiation parameters then by rendering we get the image. In CapsNet we are trying to do exactly opposite we have an image, we are learning the instantiation parameters, this would be helpful a lot in tasks like detection and segmentation. CapsNet is learning the instantiation parameters and so changes in input will be reflected in activation vectors which is equivariance. 
 
 # Methodology
 
@@ -93,6 +93,21 @@ The next experiment is an interesting one, in this the aim is to understand what
 
 Some of the observations are like thickness, skew, width, etc. This implementation results can be found along with code. 
 
+## Segmenting highly overlapping digits
+
+Dynamic routing can be viewed as a parallel attention mechanism that allows each capsule at one level to attend to some active capsules at the level below and to ignore others. This should allow the model to recognize multiple objects in the image even if objects overlap which is what they will talk in this. 
+
+### MultiMNIST Dataset
+
+They generate the MultiMNIST training and test dataset by overlaying a digit on top of another digit from the same set (training or test) but different class. Each digit is shifted up to 4 pixels in each direction resulting in a 36 × 36 image. For each digit in the MNIST dataset
+we generate 1K MultiMNIST examples.
+
+### MultiMNIST Results
+
+As a baseline they trained a CNN with two conv layers and two fully connected layers on top of them. The first layer has 512 convolution kernels of size 9 × 9 and stride 1. The second layer has 256 kernels of size 5 × 5 and stride 1. After each conv model has max pooling of size 2 × 2 and stride 2. The third layer is a 1024D fully connected layer. All three layers have ReLU non-linearities. The final fc layer is of 10 units.
+
+CapsNet performs better than the baseline model. The two most active digit capsules are treated as outputs of the model for the image. For the reconstruction each digit is picked seperately and activation vector of that digit is used.  
+
 ## Other Datasets 
 
 They tested the CapsNet on CIFAR-10 and achieved 10.6% error with an ensemble of 7 models each of which is trained with 3 routing iterations on 24 × 24 patches of the image. They also found that it helped to introduce a "none-of-the-above" category for the routing softmaxes, since they do not expect the final layer of ten capsules to explain everything in the image. 
@@ -104,6 +119,8 @@ They tested the CapsNet on CIFAR-10 and achieved 10.6% error with an ensemble of
 [Understanding Dynamic Routing between Capsules](https://jhui.github.io/2017/11/03/Dynamic-Routing-Between-Capsules/)
 
 [Dynamic Routing Between Capsules](https://papers.nips.cc/paper/6975-dynamic-routing-between-capsules.pdf)
+
+[Capsule Networks (CapsNets) – Tutorial]`(https://www.youtube.com/watch?v=pPN8d0E3900&t=827s)
 
 # Contact 
 
