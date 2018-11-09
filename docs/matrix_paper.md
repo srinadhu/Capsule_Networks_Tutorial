@@ -7,7 +7,7 @@ In the introduction section of [the previous atricle](./routing_paper.html) we d
 
 To handle the different variants of objects, e.g. different orientations of face, we need to add more neurons and layers to the network. It also requires large dataset to incorporate multiple variants of object. MNist dataset contains 5500 samples per digit. Human brain do not need that many samples to learn recognizing digits.
 
-CNN is also vulnerable to adversaires by simple move, rotate or resize individual feature, as they do not uses spacial relations between this features. Via, adding small noise to the original image we can generate images that are undistiguisable by human eyes and fools a CNN network.
+CNN is also vulnerable to adversaires by simple move, rotate or resize individual feature, as they do not uses spatial relations between this features. Via, adding small noise to the original image we can generate images that are undistiguisable by human eyes and fools a CNN network.
 
 ## Capsule
 
