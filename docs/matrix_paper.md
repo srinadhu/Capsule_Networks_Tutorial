@@ -42,7 +42,15 @@ For matrix capsule, EM routing machanism is used to find the pose matrix of a ca
 Using the minimum description length principle we have a choice when deciding whether or not to activate a higher-level capsule. *Choice 0:* if we do not activate it, we must pay a fixed cost of −$\beta_u$ per data-point for describing the poses of all the lower-level capsules that are assigned to the higher-level capsule. This cost is the negative log probability density of the data-point under an improper uniform prior(Gaussian with given mean and variance). *Choice 1:* if we do activate the higher-level capsule we must pay a fixed cost of −$\beta_a$ for coding its mean and variance and the fact that it is active and then pay additional costs,  pro-rated by the assignment probabilities,  for describing the discrepancies between the lower-level means and the values predicted for them.
 
 we define the activation function of capsule j to be:
-$a_j = logistic(\lambda (\beta_a -\beta_u\sum{i} r_{ij} - \sum{h} cost^h_j))$
+$$a_j = logistic(\lambda (\beta_a -\beta_u\sum{i} r_{ij} - \sum{h} cost^h_j))$$
+
+While the pose matrix is computed by taking a weighted sum of all the votes from the lower layer capsules, using the following formula:
+$$\mu^h_j = \frac{\sum{i}R_{ij}V^h_{ij}}{\sum{i}R_{ij}}$$
+where the $R_{ij}$ is the assignment probability, which is computed using the following formula:
+$$R_{ij} = \frac{a_j P_{i|j}}{\sum{u \in \omega_{L+1}a_u P_{i|u}}$$
+
+Here we compute the mean, variance and activation in M-step, while the assignment probabilities in E-step and update them iteratively, which leads to the final activation and pose matrix.
+
 
 _yay_
 
