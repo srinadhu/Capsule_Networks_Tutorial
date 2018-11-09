@@ -81,7 +81,7 @@ Training is performed on 28 × 28 MNIST images that have been shifted by up to 2
 
 The baseline is a standard CNN with three convolutional layers of 256, 256, 128 channels. Each has 5x5 kernels and stride of 1. The last convolutional layers are followed by two fully connected layers of size 328, 192. The last fully connected layer is connected with dropout to a 10 class softmax layer with cross entropy loss. The baseline is trained on 2-pixel shifted MNIST with Adam optimizer.
 
-The CapsNet is the above architecture. The paper gets a low test error (0.25%) on a 3 layer network previously only achieved by deeper networks. This implementation gave lowest error of  . 
+The CapsNet is the above architecture. The paper gets a low test error (0.25%) on a 3 layer network previously only achieved by deeper networks. This implementation gave lowest error of 0.55% 
 
 ![table](./images/table.png)
 
