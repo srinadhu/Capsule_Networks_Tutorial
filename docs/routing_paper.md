@@ -38,13 +38,20 @@ For finding the input to higher layer capsules, we first calculate prediction ve
 
 ![rt](./images/rt.png)
 
-Since here we are predicting the higher layer capsule output using the lower layer ones, the votes will get transformed with the same transformation we applied to the image, and since all the votes are going through the same transformation as shown in the figure above, it will not affect the classification probability.
-While in the case of deformed face the transformation of votes from the ideal face-votes will be different across the different features, which will reduce the norm of the output vector of higher layer capsules and hence the classification probability. The coupling coefficients between capsule i and all the capsules in the layer above sum to 1.
+Now let's look at routing procedure:
+1. Firstly we initialize all logits between i,j pairs to 0
+2. We run the below procedure for fixed number of times
+   1. We get all the coupling coefficients pairs i,j by softmax on logits
+   2. We calculate the input to all j's by (2)
+   3. We calculate output by squashing (1) which we call as output
+   4. We update the logits. We will see next how do we update
+3. return the output
 
+The updation of logits is done as follows: we have the prediction vector between i and j, output of j vector. We do a dot product between both of them and add the dot product to that pair logit. The coupling coefficients between capsule i and all the capsules in the layer above sum to 1. 
 
+![routing](./images/routing.jpg)
 
-
-
+We use dynamic routing to compute the output of a capsule. We compute cij to quantify the connection between a capsule and its parent capsules. This value is important but short lived. To calculate a capsule output, training or testing, we always redo the dynamic routing calculation. 
 
 
 # References
