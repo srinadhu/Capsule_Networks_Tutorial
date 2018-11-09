@@ -51,6 +51,15 @@ $$R_{ij} = \frac{a_j P_{i|j}}{\sum{u \in \omega_{L+1}a_u P_{i|u}}$$
 
 Here we compute the mean, variance and activation in M-step, while the assignment probabilities in E-step and update them iteratively, which leads to the final activation and pose matrix.
 
+# References
 
+[Understanding Matrix capsules with EM Routing (Based on Hinton's Capsule Networks)](https://jhui.github.io/2017/11/14/Matrix-Capsules-with-EM-routing-Capsule-Network/)
+
+[Matrix capsules with EM routing](https://ai.google/research/pubs/pub46653)
+
+
+# Contact 
+
+For anything related to this please contact **Milan** at ``2015csb1010@iitrpr.ac.in`` He will be more than happy to help you out.  
 
 [<-back](./)
