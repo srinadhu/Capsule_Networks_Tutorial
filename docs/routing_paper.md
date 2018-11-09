@@ -106,7 +106,13 @@ we generate 1K MultiMNIST examples.
 
 As a baseline they trained a CNN with two conv layers and two fully connected layers on top of them. The first layer has 512 convolution kernels of size 9 × 9 and stride 1. The second layer has 256 kernels of size 5 × 5 and stride 1. After each conv model has max pooling of size 2 × 2 and stride 2. The third layer is a 1024D fully connected layer. All three layers have ReLU non-linearities. The final fc layer is of 10 units.
 
-CapsNet performs better than the baseline model. The two most active digit capsules are treated as outputs of the model for the image. For the reconstruction each digit is picked seperately and activation vector of that digit is used.  
+CapsNet performs better than the baseline model which can be looked from table 1. The two most active digit capsules are treated as outputs of the model for the image. For the reconstruction each digit is picked seperately and activation vector of that digit is used.  
+
+![segment](./images/segment.png)
+
+The L represents the labels, R represents the labels used for reconstruction, P represents the predicted labels. Except at the * columns the P and R are same. The first four columns are challenging, model predicts correct labels and does excellent job of reconstructing. In the last column it reconstructed the R labels well though one didn't match with the L label. The * columns suggests that the model is not just finding the best fit for all the digits in the image including the ones that do not exist. 
+
+They decode the two most active DigitCaps capsules one at a time and get two images. Then by assigning any pixel with non-zero intensity to each digit we get the segmentation results for each digit.
 
 ## Other Datasets 
 
@@ -120,7 +126,7 @@ They tested the CapsNet on CIFAR-10 and achieved 10.6% error with an ensemble of
 
 [Dynamic Routing Between Capsules](https://papers.nips.cc/paper/6975-dynamic-routing-between-capsules.pdf)
 
-[Capsule Networks (CapsNets) – Tutorial]`(https://www.youtube.com/watch?v=pPN8d0E3900&t=827s)
+[Capsule Networks (CapsNets) – Tutorial](https://www.youtube.com/watch?v=pPN8d0E3900&t=827s)
 
 # Contact 
 
