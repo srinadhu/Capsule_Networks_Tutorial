@@ -13,7 +13,7 @@ Say we are doing an image classification task of human face, a well trained CNN 
 
 Now let's suppose at each neuron we have more information of feature detected like size, orientation, etc it would help model in correctly solving artificially created examples like above. The technical term used for this is **capsules** i.e. which outputs a vector instead of a scalar like neuron.
 
-# Equivariance:
+## Equivariance:
 
 Equivariance mean internal representation captures the properties of the object. A CNN model uses multiple neurons and layers in capturing different feature’s variants, as shown in fig below, due to which it requires data for multiple variants. 
 
@@ -97,8 +97,16 @@ Some of the observations are like thickness, skew, width, etc. This implementati
 
 They tested the CapsNet on CIFAR-10 and achieved 10.6% error with an ensemble of 7 models each of which is trained with 3 routing iterations on 24 × 24 patches of the image. They also found that it helped to introduce a "none-of-the-above" category for the routing softmaxes, since they do not expect the final layer of ten capsules to explain everything in the image. 
 
+
+
 # References
 
 [Understanding Dynamic Routing between Capsules](https://jhui.github.io/2017/11/03/Dynamic-Routing-Between-Capsules/)
+
+[Dynamic Routing Between Capsules](https://papers.nips.cc/paper/6975-dynamic-routing-between-capsules.pdf)
+
+# Contact 
+
+For anything related to this please contact **Sai Srinadhu K** at 2015csb1015@iitrpr.ac.in. I will be more than happy to help you out.  
 
 [back](./)
