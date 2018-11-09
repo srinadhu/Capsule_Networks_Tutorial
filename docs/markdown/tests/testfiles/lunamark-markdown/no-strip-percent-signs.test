@@ -1,0 +1,10 @@
+<<<
+This test ensures that the plain TeX `stripPercentSigns` option is disabled by
+default.
+
+The following emphasized text *should contain the percent sign at the
+% beginning of the line*.
+>>>
+codeSpan: stripPercentSigns
+interblockSeparator
+emphasis: should contain the percent sign at the (percentSign) beginning of the line

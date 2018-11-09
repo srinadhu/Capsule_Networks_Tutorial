@@ -39,10 +39,10 @@ In the face detection example, each of the lower layer capsules namely mouth, ey
 For matrix capsule, EM routing machanism is used to find the pose matrix of a capsule from the vote matrices, in which we use the standard clustering technique EM(Expectation-maximization). EM clustering is used to cluster datapoints into Gaussian distributions.
 
 # Computing pose matrix and activation
-Using the minimum description length principle we have a choice when deciding whether or not to activate a higher-level capsule. *Choice 0:* if we do not activate it, we must pay a fixed cost of −\beta_u per data-point for describing the poses of all the lower-level capsules that are assigned to the higher-level capsule. This cost is the negative log probability density of the data-point under an improper uniform prior(Gaussian with given mean and variance). *Choice 1:* if we do activate the higher-level capsule we must pay a fixed cost of −\beta_a for coding its mean and variance and the fact that it is active and then pay additional costs,  pro-rated by the assignment probabilities,  for describing the discrepancies between the lower-level means and the values predicted for them.
+Using the minimum description length principle we have a choice when deciding whether or not to activate a higher-level capsule. *Choice 0:* if we do not activate it, we must pay a fixed cost of −$\beta_u$ per data-point for describing the poses of all the lower-level capsules that are assigned to the higher-level capsule. This cost is the negative log probability density of the data-point under an improper uniform prior(Gaussian with given mean and variance). *Choice 1:* if we do activate the higher-level capsule we must pay a fixed cost of −$\beta_a$ for coding its mean and variance and the fact that it is active and then pay additional costs,  pro-rated by the assignment probabilities,  for describing the discrepancies between the lower-level means and the values predicted for them.
 
 we define the activation function of capsule j to be:
-a_j = logistic(\lambda (\beta_a -\beta_u\sum{i} r_{ij} - \sum{h} cost^h_j))
+$a_j = logistic(\lambda (\beta_a -\beta_u\sum{i} r_{ij} - \sum{h} cost^h_j))$
 
 _yay_
 

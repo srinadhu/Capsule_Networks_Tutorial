@@ -1,0 +1,115 @@
+\def\markdownOptionCitations{true}
+<<<
+This test ensures that the Lua `citations` option correctly propagates through
+the plain TeX interface and that the trailing punctuation does not get included
+in the citation name.
+
+[@f] [@f:] [@foo:bar] [@foo:bar:]
+
+[@_] [@f_] [@foo_bar] [@foo_bar_]
+
+ @f   @f:   @foo:bar   @foo:bar:
+
+ @_   @f_   @foo_bar   @foo_bar_
+>>>
+codeSpan: citations
+interblockSeparator
+BEGIN cite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: f
+END cite
+BEGIN cite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: f
+END cite
+BEGIN cite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: foo:bar
+END cite
+BEGIN cite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: foo:bar
+END cite
+interblockSeparator
+BEGIN cite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: _
+END cite
+BEGIN cite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: f_
+END cite
+BEGIN cite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: foo_bar
+END cite
+BEGIN cite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: foo_bar_
+END cite
+interblockSeparator
+BEGIN textCite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: f
+END textCite
+BEGIN textCite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: f
+END textCite
+BEGIN textCite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: foo:bar
+END textCite
+BEGIN textCite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: foo:bar
+END textCite
+interblockSeparator
+BEGIN textCite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: _
+END textCite
+BEGIN textCite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: f_
+END textCite
+BEGIN textCite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: foo_bar
+END textCite
+BEGIN textCite
+- suppressAuthor: false
+- prenote: 
+- postnote: 
+- name: foo_bar_
+END textCite

@@ -1,0 +1,2670 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Vít Novotný" />
+  <title>Markdown Package User Manual</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="markdown.css" type="text/css" />
+</head>
+<body>
+<div id="header">
+<h1 class="title">Markdown Package User Manual</h1>
+<h2 class="author">Vít Novotný</h2>
+</div>
+<div id="TOC">
+<ul>
+<li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a><ul>
+<li><a href="#requirements"><span class="toc-section-number">1.1</span> Requirements</a></li>
+<li><a href="#installation"><span class="toc-section-number">1.2</span> Installation</a><ul>
+<li><a href="#local-installation"><span class="toc-section-number">1.2.1</span> Local installation</a></li>
+<li><a href="#portable-installation"><span class="toc-section-number">1.2.2</span> Portable installation</a></li>
+</ul></li>
+<li><a href="#first-document"><span class="toc-section-number">1.3</span> First document</a><ul>
+<li><a href="#using-lua"><span class="toc-section-number">1.3.1</span> Using Lua</a><ul>
+<li><a href="#using-the-lua-module"><span class="toc-section-number">1.3.1.1</span> Using the Lua module</a></li>
+<li><a href="#using-the-lua-cli"><span class="toc-section-number">1.3.1.2</span> Using the Lua CLI</a></li>
+</ul></li>
+<li><a href="#using-plain-tex"><span class="toc-section-number">1.3.2</span> Using plain TeX</a></li>
+<li><a href="#using-latex"><span class="toc-section-number">1.3.3</span> Using LaTeX</a></li>
+<li><a href="#using-context"><span class="toc-section-number">1.3.4</span> Using ConTeXt</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#examples"><span class="toc-section-number">2</span> Examples</a><ul>
+<li><a href="#lua"><span class="toc-section-number">2.1</span> Lua</a><ul>
+<li><a href="#interfaces"><span class="toc-section-number">2.1.1</span> Interfaces</a><ul>
+<li><a href="#the-lua-module"><span class="toc-section-number">2.1.1.1</span> The Lua module</a></li>
+<li><a href="#the-lua-cli"><span class="toc-section-number">2.1.1.2</span> The Lua CLI</a></li>
+</ul></li>
+<li><a href="#options"><span class="toc-section-number">2.1.2</span> Options</a><ul>
+<li><a href="#file-and-directory-names"><span class="toc-section-number">2.1.2.1</span> File and Directory Names</a><ul>
+<li><a href="#option-cachedir"><span class="toc-section-number">2.1.2.1.1</span> Option <code>cacheDir</code></a></li>
+</ul></li>
+<li><a href="#parser-options"><span class="toc-section-number">2.1.2.2</span> Parser Options</a><ul>
+<li><a href="#option-blankbeforeblockquote"><span class="toc-section-number">2.1.2.2.1</span> Option <code>blankBeforeBlockquote</code></a></li>
+<li><a href="#option-blankbeforecodefence"><span class="toc-section-number">2.1.2.2.2</span> Option <code>blankBeforeCodeFence</code></a></li>
+<li><a href="#option-blankbeforeheading"><span class="toc-section-number">2.1.2.2.3</span> Option <code>blankBeforeHeading</code></a></li>
+<li><a href="#option-breakableblockquotes"><span class="toc-section-number">2.1.2.2.4</span> Option <code>breakableBlockquotes</code></a></li>
+<li><a href="#option-citationnbsps"><span class="toc-section-number">2.1.2.2.5</span> Option <code>citationNbsps</code></a></li>
+<li><a href="#option-citations"><span class="toc-section-number">2.1.2.2.6</span> Option <code>citations</code></a></li>
+<li><a href="#option-codespans"><span class="toc-section-number">2.1.2.2.7</span> Option <code>codeSpans</code></a></li>
+<li><a href="#option-contentblocks"><span class="toc-section-number">2.1.2.2.8</span> Option <code>contentBlocks</code></a></li>
+<li><a href="#option-contentblockslanguagemap"><span class="toc-section-number">2.1.2.2.9</span> Option <code>contentBlocksLanguageMap</code></a></li>
+<li><a href="#option-definitionlists"><span class="toc-section-number">2.1.2.2.10</span> Option <code>definitionLists</code></a></li>
+<li><a href="#option-fencedcode"><span class="toc-section-number">2.1.2.2.11</span> Option <code>fencedCode</code></a></li>
+<li><a href="#option-footnotes"><span class="toc-section-number">2.1.2.2.12</span> Option <code>footnotes</code></a></li>
+<li><a href="#option-hashenumerators"><span class="toc-section-number">2.1.2.2.13</span> Option <code>hashEnumerators</code></a></li>
+<li><a href="#option-html"><span class="toc-section-number">2.1.2.2.14</span> Option <code>html</code></a></li>
+<li><a href="#option-hybrid"><span class="toc-section-number">2.1.2.2.15</span> Option <code>hybrid</code></a></li>
+<li><a href="#option-inlinefootnotes"><span class="toc-section-number">2.1.2.2.16</span> Option <code>inlineFootnotes</code></a></li>
+<li><a href="#option-preservetabs"><span class="toc-section-number">2.1.2.2.17</span> Option <code>preserveTabs</code></a></li>
+<li><a href="#option-smartellipses"><span class="toc-section-number">2.1.2.2.18</span> Option <code>smartEllipses</code></a></li>
+<li><a href="#option-startnumber"><span class="toc-section-number">2.1.2.2.19</span> Option <code>startNumber</code></a></li>
+<li><a href="#option-tightlists"><span class="toc-section-number">2.1.2.2.20</span> Option <code>tightLists</code></a></li>
+<li><a href="#option-underscores"><span class="toc-section-number">2.1.2.2.21</span> Option <code>underscores</code></a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#plain-tex"><span class="toc-section-number">2.2</span> Plain TeX</a><ul>
+<li><a href="#interfaces-1"><span class="toc-section-number">2.2.1</span> Interfaces</a></li>
+<li><a href="#options-1"><span class="toc-section-number">2.2.2</span> Options</a></li>
+<li><a href="#token-renderers"><span class="toc-section-number">2.2.3</span> Token renderers</a></li>
+</ul></li>
+<li><a href="#latex"><span class="toc-section-number">2.3</span> LaTeX</a><ul>
+<li><a href="#interfaces-2"><span class="toc-section-number">2.3.1</span> Interfaces</a></li>
+<li><a href="#options-2"><span class="toc-section-number">2.3.2</span> Options</a></li>
+<li><a href="#token-renderers-1"><span class="toc-section-number">2.3.3</span> Token renderers</a></li>
+</ul></li>
+<li><a href="#context"><span class="toc-section-number">2.4</span> ConTeXt</a><ul>
+<li><a href="#interfaces-3"><span class="toc-section-number">2.4.1</span> Interfaces</a></li>
+<li><a href="#options-3"><span class="toc-section-number">2.4.2</span> Options</a></li>
+<li><a href="#token-renderers-2"><span class="toc-section-number">2.4.3</span> Token renderers</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<p><link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" /></p>
+<h1 id="introduction"><span class="header-section-number">1</span> Introduction</h1>
+<p>The <a href="https://ctan.org/pkg/markdown" title="CTAN: Package markdown">Markdown package</a> converts <a href="https://daringfireball.net/projects/markdown/basics/" title="Daring Fireball: Markdown Basics">markdown</a> markup to TeX commands. The functionality is provided both as a Lua module, and as plain TeX, LaTeX, and ConTeXt macro packages that can be used to directly typeset TeX documents containing markdown markup. Unlike other convertors, the Markdown package makes it easy to redefine how each and every markdown element is rendered. Creative abuse of the markdown syntax is encouraged. <i class="em em-wink"></i></p>
+<p>This document is a user manual for the <a href="https://ctan.org/pkg/markdown" title="CTAN: Package markdown">Markdown package</a>. It provides beginner tutorials and code examples. For an in-depth description of the package requirements, interfaces, and implementation, please refer to the <a href="http://mirrors.ctan.org/macros/generic/markdown/markdown.pdf" title="A Markdown Interpreter for TeX">technical documentation</a>.</p>
+<h2 id="requirements"><span class="header-section-number">1.1</span> Requirements</h2>
+<p>The package requires a working TeX distribution. <a href="https://www.tug.org/texlive/" title="TeX Live - TeX Users Group">TeX Live</a> ≥ 2013 is known to work and so are recent installation of <a href="https://miktex.org/" title="Home - MiKTeXorg">MikTeX</a>. If you are using a minimal installation of a TeX distribution, please consult the <a href="http://mirrors.ctan.org/macros/generic/markdown/markdown.pdf" title="A Markdown Interpreter for TeX">technical documentation</a> for a detailed list of required packages.</p>
+<h2 id="installation"><span class="header-section-number">1.2</span> Installation</h2>
+<p>The package comes pre-installed with <a href="https://www.tug.org/texlive/" title="TeX Live - TeX Users Group">TeX Live</a> ≥ 2016 and with recent installations of <a href="https://miktex.org/" title="Home - MiKTeXorg">MikTeX</a>. Unless you explicitly wish to use the latest version of the package, you are encouraged to skip this step.</p>
+<p>To install the package, first download the package from the repository using Git:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">git</span> clone https://github.com/witiko/markdown</code></pre></div>
+<p>Next, enter the directory named <code>markdown</code> and interpret the file named <code>markdown.ins</code> file using a Unicode-aware TeX engine, such as XeTeX or LuaTeX:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="bu">cd</span> markdown
+<span class="ex">luatex</span> markdown.ins</code></pre></div>
+<p>This should produce the following files:</p>
+<ul>
+<li><code>markdown.lua</code> – the Lua module,</li>
+<li><code>markdown-cli.lua</code> – the Lua command-line interface,</li>
+<li><code>markdown.tex</code> – the plain TeX macro package,</li>
+<li><code>markdown.sty</code> – the LaTeX package, and</li>
+<li><code>t-markdown.tex</code> – the ConTeXt module.</li>
+</ul>
+<h3 id="local-installation"><span class="header-section-number">1.2.1</span> Local installation</h3>
+<p>To perform a local installation, place the above files into your TeX directory structure. This is generally where the individual files should be placed:</p>
+<ul>
+<li><code>&lt;TEXMF&gt;/tex/luatex/markdown/markdown.lua</code></li>
+<li><code>&lt;TEXMF&gt;/scripts/markdown/markdown-cli.lua</code></li>
+<li><code>&lt;TEXMF&gt;/tex/generic/markdown/markdown.tex</code></li>
+<li><code>&lt;TEXMF&gt;/tex/latex/markdown/markdown.sty</code></li>
+<li><code>&lt;TEXMF&gt;/tex/context/third/markdown/t-markdown.tex</code></li>
+</ul>
+<p>where <code>&lt;TEXMF&gt;</code> corresponds to a root of your TeX distribution, such as <code>/usr/share/texmf</code> and <code>~/texmf</code> on UN*X systems or <code>C:\Users\&lt;YOUR␣USERNAME&gt;\texmf</code> on Windows systems. When in doubt, consult the manual of your TeX distribution.</p>
+<h3 id="portable-installation"><span class="header-section-number">1.2.2</span> Portable installation</h3>
+<p>Alternatively, you can also store the above files in the same folder as your TeX document and distribute them together. This way your document can be portably typeset on legacy TeX distributions.</p>
+<h2 id="first-document"><span class="header-section-number">1.3</span> First document</h2>
+<p>In this section, we will take the necessary steps to typeset our first markdown document in TeX. This will serve as our first hands-on experience with the package and also as a reassurance that the package has been correctly installed.</p>
+<h3 id="using-lua"><span class="header-section-number">1.3.1</span> Using Lua</h3>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> hello
+<span class="fu">\bye</span></code></pre></div>
+<h4 id="using-the-lua-module"><span class="header-section-number">1.3.1.1</span> Using the Lua module</h4>
+<p>Using a text editor, create a text document named <code>hello.lua</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode lua"><code class="sourceCode lua"><span class="ot">#</span>!<span class="ot">/</span>usr<span class="ot">/</span>bin<span class="ot">/</span>env texlua
+<span class="kw">local</span> kpse <span class="ot">=</span> <span class="fu">require</span><span class="ot">(</span><span class="st">&quot;kpse&quot;</span><span class="ot">)</span>
+kpse<span class="ot">.</span>set_program_name<span class="ot">(</span><span class="st">&quot;luatex&quot;</span><span class="ot">)</span>
+<span class="kw">local</span> markdown <span class="ot">=</span> <span class="fu">require</span><span class="ot">(</span><span class="st">&quot;markdown&quot;</span><span class="ot">)</span>
+<span class="kw">local</span> convert <span class="ot">=</span> markdown<span class="ot">.</span>new<span class="ot">()</span>
+<span class="fu">print</span><span class="ot">(</span>convert<span class="ot">(</span><span class="st">&quot;Hello *world*!&quot;</span><span class="ot">))</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> hello.lua <span class="op">&gt;</span> hello.tex
+<span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the text “Hello <em>world</em>!” Invoking pdfTeX should have the same effect:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> hello.lua <span class="op">&gt;</span> hello.tex
+<span class="ex">pdftex</span> document.tex</code></pre></div>
+<h4 id="using-the-lua-cli"><span class="header-section-number">1.3.1.2</span> Using the Lua CLI</h4>
+<p>Using a text editor, create a text document named <code>hello.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">Hello *world*!</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> -- hello.md hello.tex
+<span class="ex">luatex</span> document.tex</code></pre></div>
+<p>where <code>&lt;CLI␣PATHNAME&gt;</code> corresponds to the location of the Lua CLI script file, such as <code>~/texmf/scripts/markdown/markdown-cli.lua</code> on UN*X systems or <code>C:\Users\&lt;YOUR␣USERNAME&gt;\texmf\scripts\markdown\markdown-cli.lua</code> on Windows systems. Use the command <code>kpsewhich markdown-cli.lua</code> to locate the Lua CLI script file using <a href="https://tug.org/kpathsea/" title="Kpathsea - TeX Users Group">Kpathsea</a>.</p>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the text “Hello <em>world</em>!” Invoking pdfTeX should have the same effect:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> -- hello.md hello.tex
+<span class="ex">pdftex</span> document.tex</code></pre></div>
+<h3 id="using-plain-tex"><span class="header-section-number">1.3.2</span> Using plain TeX</h3>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\markdownBegin</span>
+Hello *world*!
+<span class="fu">\markdownEnd</span>
+<span class="fu">\bye</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the text “Hello <em>world</em>!” Invoking pdfTeX should have the same effect:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">pdftex</span> --shell-escape document.tex</code></pre></div>
+<h3 id="using-latex"><span class="header-section-number">1.3.3</span> Using LaTeX</h3>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+Hello *world*!
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the text “Hello <em>world</em>!” Invoking pdfTeX should have the same effect:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">pdflatex</span> --shell-escape document.tex</code></pre></div>
+<hr />
+<p>As the next step, try typesetting the example documents distributed along with the Markdown package:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">git</span> clone https://github.com/witiko/markdown
+<span class="bu">cd</span> markdown/examples
+<span class="ex">lualatex</span> latex.tex</code></pre></div>
+<p>A PDF document named <code>latex.pdf</code> should be produced. Open the text documents <code>latex.tex</code> and <code>example.md</code> in a text editor to see how the example documents are structured. Try changing the documents and typesetting them as follows:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> latex.tex</code></pre></div>
+<p>to see the effect of your changes.</p>
+<h3 id="using-context"><span class="header-section-number">1.3.4</span> Using ConTeXt</h3>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\starttext</span>
+<span class="fu">\startmarkdown</span>
+Hello *world*!
+<span class="fu">\stopmarkdown</span>
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the text “Hello <em>world</em>!” Invoking pdfTeX should have the same effect:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texexec</span> --passon=--shell-escape document.tex</code></pre></div>
+<hr />
+<p>As the next step, try typesetting the example documents distributed along with the Markdown package:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">git</span> clone https://github.com/witiko/markdown
+<span class="bu">cd</span> markdown/examples
+<span class="ex">context</span> context.tex</code></pre></div>
+<p>A PDF document named <code>context.pdf</code> should be produced. Open the text documents <code>context.tex</code> and <code>example.md</code> in a text editor to see how the example documents are structured. Try changing the documents and typesetting them as follows:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> context.tex</code></pre></div>
+<p>to see the effect of your changes.</p>
+<h1 id="examples"><span class="header-section-number">2</span> Examples</h1>
+<p>This section will show how to use the package by example.</p>
+<h2 id="lua"><span class="header-section-number">2.1</span> Lua</h2>
+<p>The Lua part of the package makes it possible to convert a markdown document into TeX commands and typeset it later when convenient. Although the typical user will not find this terribly useful and will instead use the plain TeX, LaTeX, and ConTeXt macro packages to convert and typeset the markdown documents in a single step, they will still benefit from learning the options that control the behavior of the Lua parser.</p>
+<h3 id="interfaces"><span class="header-section-number">2.1.1</span> Interfaces</h3>
+<p>The Lua part of the package exposes two interfaces – the <code>markdown</code> Lua module, and the Lua command-line interface (CLI).</p>
+<h4 id="the-lua-module"><span class="header-section-number">2.1.1.1</span> The Lua module</h4>
+<p>The <code>markdown</code> Lua module exposes the <code>new(options)</code> method, which creates a converter function from markdown to TeX. The properties of the converter function are specified by the Lua table <code>options</code>. The parameter is optional; when unspecified, the behaviour will be the same as if <code>options</code> were an empty table.</p>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\input</span> example
+<span class="fu">\bye</span></code></pre></div>
+<p>Using a text editor, create a text document named <code>example.lua</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode lua"><code class="sourceCode lua"><span class="ot">#</span>!<span class="ot">/</span>usr<span class="ot">/</span>bin<span class="ot">/</span>env texlua
+<span class="kw">local</span> kpse <span class="ot">=</span> <span class="fu">require</span><span class="ot">(</span><span class="st">&quot;kpse&quot;</span><span class="ot">)</span>
+kpse<span class="ot">.</span>set_program_name<span class="ot">(</span><span class="st">&quot;luatex&quot;</span><span class="ot">)</span>
+<span class="kw">local</span> markdown <span class="ot">=</span> <span class="fu">require</span><span class="ot">(</span><span class="st">&quot;markdown&quot;</span><span class="ot">)</span>
+<span class="kw">local</span> convert_safe <span class="ot">=</span> markdown<span class="ot">.</span>new<span class="ot">()</span>
+<span class="kw">local</span> convert_unsafe <span class="ot">=</span> markdown<span class="ot">.</span>new<span class="ot">({</span>hybrid <span class="ot">=</span> <span class="kw">true</span><span class="ot">})</span>
+<span class="kw">local</span> input <span class="ot">=</span> <span class="st">[[$\sqrt{-1}$ *equals* $i$.]]</span>
+<span class="fu">print</span><span class="ot">(</span>convert_safe<span class="ot">(</span>input<span class="ot">)</span> <span class="ot">..</span> <span class="st">&quot; &quot;</span> <span class="ot">..</span> convert_unsafe<span class="ot">(</span>input<span class="ot">))</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> example.lua <span class="op">&gt;</span> example.tex
+<span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the text “$\sqrt{-1}$ <em>equals</em> $i$. √-̅1̅ <em>equals</em> <span class="math inline"><em>i</em></span>.” Invoking pdfTeX should have the same effect:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> example.lua <span class="op">&gt;</span> example.tex
+<span class="ex">pdftex</span> document.tex</code></pre></div>
+<hr />
+<p>Rather than use the <code>texlua</code> interpreter, we can also access the <code>markdown</code> Lua module directly from our document. Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\directlua</span>{
+  local markdown = require(&quot;markdown&quot;)
+  local convert_safe = markdown.new()
+  local convert_unsafe = markdown.new({hybrid = true})
+  local input = [[<span class="ss">$</span><span class="sc">\noexpand\sqrt</span><span class="ss">{-1}$</span> *equals* <span class="ss">$i$</span>.]]
+  tex.sprint(convert_safe(input) .. &quot; &quot; .. convert_unsafe(input)) }
+<span class="fu">\bye</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the text “$\sqrt {-1}$ <em>equals</em> $i$. √-̅1̅ <em>equals</em> <span class="math inline"><em>i</em></span>.” In this case, we cannot use pdfTeX, because pdfTeX does not define the <code>\directlua</code> TeX command.</p>
+<h4 id="the-lua-cli"><span class="header-section-number">2.1.1.2</span> The Lua CLI</h4>
+<p>The Lua command-line interface (CLI) accepts the same options as the <code>markdown</code> Lua module, but now the options are specified as command-line parameters.</p>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\input</span> safe<span class="fu">\ \input</span> unsafe
+<span class="fu">\bye</span></code></pre></div>
+<p>Using a text editor, create a text document named <code>example.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">$\sqrt{-1}$ *equals* $i$.</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> -- example.md safe.tex
+<span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> hybrid=true -- example.md unsafe.tex
+<span class="ex">luatex</span> document.tex</code></pre></div>
+<p>where <code>&lt;CLI␣PATHNAME&gt;</code> corresponds to the location of the Lua CLI script file, such as <code>~/texmf/scripts/markdown/markdown-cli.lua</code> on UN*X systems or <code>C:\Users\&lt;YOUR␣USERNAME&gt;\texmf\scripts\markdown\markdown-cli.lua</code> on Windows systems. Use the command <code>kpsewhich markdown-cli.lua</code> to locate the Lua CLI script file using <a href="https://tug.org/kpathsea/" title="Kpathsea - TeX Users Group">Kpathsea</a>.</p>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the text “$\sqrt{-1}$ <em>equals</em> $i$. √-̅1̅ <em>equals</em> <span class="math inline"><em>i</em></span>.” Invoking pdfTeX should have the same effect:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> -- example.md safe.tex
+<span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> hybrid=true -- example.md unsafe.tex
+<span class="ex">pdftex</span> document.tex</code></pre></div>
+<h3 id="options"><span class="header-section-number">2.1.2</span> Options</h3>
+<p>This section will cover the options recognized by the Lua interface. The interfaces of the plain TeX, LaTeX, and ConTeXt macro packages recognize these options as well, in addition to their own options.</p>
+<h4 id="file-and-directory-names"><span class="header-section-number">2.1.2.1</span> File and Directory Names</h4>
+<h5 id="option-cachedir"><span class="header-section-number">2.1.2.1.1</span> Option <code>cacheDir</code></h5>
+<dl>
+<dt><code>cacheDir</code> (default value: <code>&quot;.&quot;</code>)</dt>
+<dd><p>A path to the directory containing auxiliary cache files. If the last segment of the path does not exist, it will be created by the Lua command-line and plain TeX implementations. The Lua implementation expects that the entire path already exists.</p>
+<p>When iteratively writing and typesetting a markdown document, the cache files are going to accumulate over time. You are advised to clean the cache directory every now and then, or to set it to a temporary filesystem (such as <code>/tmp</code> on UN*X systems), which gets periodically emptied.</p>
+</dd>
+</dl>
+<h6 id="lua-module-example" class="unnumbered">Lua module example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\directlua</span>{
+  local markdown = require(&quot;markdown&quot;)
+  local convert = markdown.new({cacheDir = &quot;cache&quot;})
+  local input = &quot;Hello *world*!&quot;
+  tex.sprint(convert(input)) }
+<span class="fu">\bye</span></code></pre></div>
+<p>Create an empty directory named <code>cache</code> next to our text document. Then, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the text “Hello <em>world</em>!” Several cache files of the Markdown package will also be produced in the <code>cache</code> directory as we requested using the <code>cacheDir</code> option.</p>
+<h6 id="lua-cli-example" class="unnumbered">Lua CLI example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> hello
+<span class="fu">\bye</span></code></pre></div>
+<p>Using a text editor, create a text document named <code>hello.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">Hello *world*!</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> cacheDir=cache -- hello.md hello.tex
+<span class="ex">luatex</span> document.tex</code></pre></div>
+<p>where <code>&lt;CLI␣PATHNAME&gt;</code> corresponds to the location of the Lua CLI script file, such as <code>~/texmf/scripts/markdown/markdown-cli.lua</code> on UN*X systems or <code>C:\Users\&lt;YOUR␣USERNAME&gt;\texmf\scripts\markdown\markdown-cli.lua</code> on Windows systems. Use the command <code>kpsewhich markdown-cli.lua</code> to locate the Lua CLI script file using <a href="https://tug.org/kpathsea/" title="Kpathsea - TeX Users Group">Kpathsea</a>.</p>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the text “Hello <em>world</em>!” A directory named <code>cache</code> containing several cache files of the Markdown package will also be produced as we requested using the <code>cacheDir</code> option.</p>
+<h6 id="plain-tex-example" class="unnumbered">Plain TeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\def</span>\markdownOptionCacheDir{cache}
+<span class="fu">\markdownBegin</span>
+Hello *world*!
+<span class="fu">\markdownEnd</span>
+<span class="fu">\bye</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the text “Hello <em>world</em>!” A directory named <code>cache</code> containing several cache files of the Markdown package will also be produced as we requested using the <code>cacheDir</code> option.</p>
+<h6 id="latex-example" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>[cacheDir=cache]{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+Hello *world*!
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the text “Hello <em>world</em>!” A directory named <code>cache</code> containing several cache files of the Markdown package will also be produced as we requested using the <code>cacheDir</code> option.</p>
+<h6 id="context-example" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\def</span>\markdownOptionCacheDir{cache}
+<span class="fu">\starttext</span>
+<span class="fu">\startmarkdown</span>
+Hello *world*!
+<span class="fu">\stopmarkdown</span>
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the text “Hello <em>world</em>!” A directory named <code>cache</code> containing several cache files of the Markdown package will also be produced as we requested using the <code>cacheDir</code> option.</p>
+<h4 id="parser-options"><span class="header-section-number">2.1.2.2</span> Parser Options</h4>
+<h5 id="option-blankbeforeblockquote"><span class="header-section-number">2.1.2.2.1</span> Option <code>blankBeforeBlockquote</code></h5>
+<dl>
+<dt><code>blankBeforeBlockquote</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Require a blank line between a paragraph and the following blockquote.</p>
+</dd>
+<dt>false</dt>
+<dd><p>Do not require a blank line between a paragraph and the following blockquote.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="lua-module-example-1" class="unnumbered">Lua module example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\directlua</span>{
+  local markdown = require(&quot;markdown&quot;)
+  local newline = [[^^J^^J]]
+  local convert, input
+
+  convert = markdown.new()
+  input = &quot;A paragraph.&quot; .. newline ..
+          &quot;&gt; A quote.&quot;   .. newline
+  tex.sprint(convert(input))
+
+  convert = markdown.new({blankBeforeBlockquote = true})
+  input = &quot;A paragraph.&quot;   .. newline ..
+          &quot;&gt; Not a quote.&quot; .. newline
+  tex.sprint(convert(input)) }
+<span class="fu">\bye</span></code></pre></div>
+<p>Then, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<blockquote>
+<p>A quote.</p>
+</blockquote>
+<p>A paragraph &gt; Not a quote.</p>
+</blockquote>
+<h6 id="lua-cli-example-1" class="unnumbered">Lua CLI example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\input</span> optionfalse
+<span class="fu">\input</span> optiontrue
+<span class="fu">\bye</span></code></pre></div>
+<p>Using a text editor, create a text document named <code>content.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">A paragraph.
+&gt;<span class="dt"> A quote?</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> -- content.md optionfalse.tex
+<span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> blankBeforeBlockquote=true -- content.md optiontrue.tex
+<span class="ex">luatex</span> document.tex</code></pre></div>
+<p>where <code>&lt;CLI␣PATHNAME&gt;</code> corresponds to the location of the Lua CLI script file, such as <code>~/texmf/scripts/markdown/markdown-cli.lua</code> on UN*X systems or <code>C:\Users\&lt;YOUR␣USERNAME&gt;\texmf\scripts\markdown\markdown-cli.lua</code> on Windows systems. Use the command <code>kpsewhich markdown-cli.lua</code> to locate the Lua CLI script file using <a href="https://tug.org/kpathsea/" title="Kpathsea - TeX Users Group">Kpathsea</a>.</p>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<blockquote>
+<p>A quote?</p>
+</blockquote>
+<p>A paragraph. &gt; A quote?</p>
+</blockquote>
+<h6 id="plain-tex-example-1" class="unnumbered">Plain TeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+
+<span class="fu">\markdownBegin</span>
+A paragraph.
+&gt; A quote.
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\def</span>\markdownOptionBlankBeforeBlockquote{true}
+<span class="fu">\markdownBegin</span>
+A paragraph.
+&gt; Not a quote.
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\bye</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<blockquote>
+<p>A quote.</p>
+</blockquote>
+<p>A paragraph &gt; Not a quote.</p>
+</blockquote>
+<h6 id="latex-example-1" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+A paragraph.
+&gt; A quote.
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown*</span>}{blankBeforeBlockquote}
+A paragraph.
+&gt; Not a quote.
+<span class="kw">\end</span>{<span class="ex">markdown*</span>}
+
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<blockquote>
+<p>A quote.</p>
+</blockquote>
+<p>A paragraph &gt; Not a quote.</p>
+</blockquote>
+<h6 id="context-example-1" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\starttext</span>
+
+<span class="fu">\startmarkdown</span>
+A paragraph.
+&gt; A quote.
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\def</span>\markdownOptionBlankBeforeBlockquote{true}
+<span class="fu">\startmarkdown</span>
+A paragraph.
+&gt; Not a quote.
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<blockquote>
+<p>A quote.</p>
+</blockquote>
+<p>A paragraph &gt; Not a quote.</p>
+</blockquote>
+<h5 id="option-blankbeforecodefence"><span class="header-section-number">2.1.2.2.2</span> Option <code>blankBeforeCodeFence</code></h5>
+<dl>
+<dt><code>blankBeforeCodeFence</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Require a blank line between a paragraph and the following fenced code block.</p>
+</dd>
+<dt>false</dt>
+<dd><p>Do not require a blank line between a paragraph and the following fenced code block.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="lua-module-example-2" class="unnumbered">Lua module example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\directlua</span>{
+  local markdown = require(&quot;markdown&quot;)
+  local newline = [[^^J^^J]]
+  local convert, input
+
+  convert = markdown.new({fencedCode = true})
+  input = &quot;A paragraph.&quot;   .. newline ..
+          &quot;```&quot;            .. newline ..
+          &quot;A code fence.&quot;  .. newline ..
+          &quot;```&quot;            .. newline
+  tex.sprint(convert(input))
+
+  convert = markdown.new({
+    fencedCode = true, blankBeforeCodeFence = true})
+  input = &quot;A paragraph.&quot;       .. newline ..
+          &quot;```&quot;                .. newline ..
+          &quot;Not a code fence.&quot;  .. newline ..
+          &quot;```&quot;                .. newline
+  tex.sprint(convert(input)) }
+<span class="fu">\bye</span></code></pre></div>
+<p>Then, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<pre><code>A code fence.</code></pre>
+<p>A paragraph. <code>Not a code fence.</code></p>
+</blockquote>
+<h6 id="lua-cli-example-2" class="unnumbered">Lua CLI example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\input</span> optionfalse
+<span class="fu">\input</span> optiontrue
+<span class="fu">\bye</span></code></pre></div>
+<p>Using a text editor, create a text document named <code>content.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">A paragraph.
+```
+A code fence?
+```</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> fencedCode=true -- content.md optionfalse.tex
+<span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> fencedCode=true blankBeforeCodeFence=true  -- content.md optiontrue.tex
+<span class="ex">luatex</span> document.tex</code></pre></div>
+<p>where <code>&lt;CLI␣PATHNAME&gt;</code> corresponds to the location of the Lua CLI script file, such as <code>~/texmf/scripts/markdown/markdown-cli.lua</code> on UN*X systems or <code>C:\Users\&lt;YOUR␣USERNAME&gt;\texmf\scripts\markdown\markdown-cli.lua</code> on Windows systems. Use the command <code>kpsewhich markdown-cli.lua</code> to locate the Lua CLI script file using <a href="https://tug.org/kpathsea/" title="Kpathsea - TeX Users Group">Kpathsea</a>.</p>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<pre><code>A code fence?</code></pre>
+<p>A paragraph. <code>A code fence?</code></p>
+</blockquote>
+<h6 id="plain-tex-example-2" class="unnumbered">Plain TeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\def</span>\markdownOptionFencedCode{true}
+
+<span class="fu">\markdownBegin</span>
+A paragraph.
+```
+A code fence.
+```
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\def</span>\markdownOptionBlankBeforeCodeFence{true}
+<span class="fu">\markdownBegin</span>
+A paragraph.
+```
+Not a code fence.
+```
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\bye</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<pre><code>A code fence.</code></pre>
+<p>A paragraph. <code>Not a code fence.</code></p>
+</blockquote>
+<h6 id="latex-example-2" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>[fencedCode]{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+A paragraph.
+```
+A code fence.
+```
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown*</span>}{blankBeforeCodeFence}
+A paragraph.
+```
+Not a code fence.
+```
+<span class="kw">\end</span>{<span class="ex">markdown*</span>}
+
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<pre><code>A code fence.</code></pre>
+<p>A paragraph. <code>Not a code fence.</code></p>
+</blockquote>
+<h6 id="context-example-2" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\def</span>\markdownOptionFencedCode{true}
+<span class="fu">\starttext</span>
+
+<span class="fu">\startmarkdown</span>
+A paragraph.
+```
+A code fence.
+```
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\def</span>\markdownOptionBlankBeforeCodeFence{true}
+<span class="fu">\startmarkdown</span>
+A paragraph.
+```
+Not a code fence.
+```
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<pre><code>A code fence.</code></pre>
+<p>A paragraph. <code>Not a code fence.</code></p>
+</blockquote>
+<h5 id="option-blankbeforeheading"><span class="header-section-number">2.1.2.2.3</span> Option <code>blankBeforeHeading</code></h5>
+<dl>
+<dt><code>blankBeforeHeading</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Require a blank line between a paragraph and the following header.</p>
+</dd>
+<dt>false</dt>
+<dd><p>Do not require a blank line between a paragraph and the following header.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="lua-module-example-3" class="unnumbered">Lua module example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\def</span>\markdownRendererHeadingOne#1{{\bf #1}\par}
+<span class="fu">\directlua</span>{
+  local markdown = require(&quot;markdown&quot;)
+  local newline = [[^^J^^J]]
+  local convert, input
+
+  convert = markdown.new()
+  input = &quot;A paragraph.&quot; .. newline ..
+          &quot;A heading.&quot;   .. newline ..
+          &quot;==========&quot;   .. newline
+  tex.sprint(convert(input))
+
+  convert = markdown.new({blankBeforeHeading = true})
+  input = &quot;A paragraph.&quot;    .. newline ..
+          &quot;Not a heading.&quot;  .. newline ..
+          &quot;==============&quot;  .. newline
+  tex.sprint(convert(input)) }
+<span class="fu">\bye</span></code></pre></div>
+<p>Then, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<h1 id="a-heading.">A heading.</h1>
+<p>A paragraph. Not a heading. ==============</p>
+</blockquote>
+<h6 id="lua-cli-example-3" class="unnumbered">Lua CLI example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\input</span> optionfalse
+<span class="fu">\input</span> optiontrue
+<span class="fu">\bye</span></code></pre></div>
+<p>Using a text editor, create a text document named <code>content.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">A paragraph.
+A heading?
+==========</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> -- content.md optionfalse.tex
+<span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> blankBeforeHeading=true  -- content.md optiontrue.tex
+<span class="ex">luatex</span> document.tex</code></pre></div>
+<p>where <code>&lt;CLI␣PATHNAME&gt;</code> corresponds to the location of the Lua CLI script file, such as <code>~/texmf/scripts/markdown/markdown-cli.lua</code> on UN*X systems or <code>C:\Users\&lt;YOUR␣USERNAME&gt;\texmf\scripts\markdown\markdown-cli.lua</code> on Windows systems. Use the command <code>kpsewhich markdown-cli.lua</code> to locate the Lua CLI script file using <a href="https://tug.org/kpathsea/" title="Kpathsea - TeX Users Group">Kpathsea</a>.</p>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<h1 id="a-heading">A heading?</h1>
+<p>A paragraph. A heading? ==========</p>
+</blockquote>
+<h6 id="plain-tex-example-3" class="unnumbered">Plain TeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+
+<span class="fu">\markdownBegin</span>
+A paragraph.
+A heading.
+==========
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\def</span>\markdownOptionBlankBeforeHeading{true}
+<span class="fu">\markdownBegin</span>
+A paragraph.
+Not a heading.
+==============
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\bye</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<h1 id="a-heading.-1">A heading.</h1>
+<p>A paragraph. Not a heading. ==============</p>
+</blockquote>
+<h6 id="latex-example-3" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+A paragraph.
+A heading.
+==========
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown*</span>}{blankBeforeHeading}
+A paragraph.
+Not a heading.
+==============
+<span class="kw">\end</span>{<span class="ex">markdown*</span>}
+
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<h1 id="a-heading.-2">A heading.</h1>
+<p>A paragraph. Not a heading. ==============</p>
+</blockquote>
+<h6 id="context-example-3" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\starttext</span>
+
+<span class="fu">\startmarkdown</span>
+A paragraph.
+A heading.
+==========
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\def</span>\markdownOptionBlankBeforeHeading{true}
+<span class="fu">\startmarkdown</span>
+A paragraph.
+Not a heading.
+==============
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>A paragraph.</p>
+<h1 id="a-heading.-3">A heading.</h1>
+<p>A paragraph. Not a heading. ==============</p>
+</blockquote>
+<h5 id="option-breakableblockquotes"><span class="header-section-number">2.1.2.2.4</span> Option <code>breakableBlockquotes</code></h5>
+<dl>
+<dt><code>breakableBlockquotes</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>A blank line separates block quotes.</p>
+</dd>
+<dt>false</dt>
+<dd><p>Blank lines in the middle of a block quote are ignored.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="lua-module-example-4" class="unnumbered">Lua module example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\def</span>\markdownRendererHeadingOne#1{{\bf #1}\par}
+<span class="fu">\directlua</span>{
+  local markdown = require(&quot;markdown&quot;)
+  local newline = [[^^J^^J]]
+  local convert, input
+
+  convert = markdown.new()
+  input = &quot;&gt; A single&quot;     .. newline .. newline ..
+          &quot;&gt; block quote.&quot; .. newline
+  tex.sprint(convert(input))
+
+  convert = markdown.new({breakableBlockquotes = true})
+  input = &quot;&gt; A block quote.&quot;       .. newline .. newline ..
+          &quot;&gt; Another block quote.&quot; .. newline
+  tex.sprint(convert(input)) }
+<span class="fu">\bye</span></code></pre></div>
+<p>Then, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<blockquote>
+<p>A single block quote.</p>
+</blockquote>
+<blockquote>
+<p>A block quote.</p>
+</blockquote>
+<blockquote>
+<p>Another block quote.</p>
+</blockquote>
+</blockquote>
+<h6 id="lua-cli-example-4" class="unnumbered">Lua CLI example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\input</span> optionfalse
+<span class="fu">\input</span> optiontrue
+<span class="fu">\bye</span></code></pre></div>
+<p>Using a text editor, create a text document named <code>content.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">&gt;<span class="dt"> A single block quote</span>
+
+<span class="dt">&gt; or two block quotes?</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> -- content.md optionfalse.tex
+<span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> breakableBlockquotes=true  -- content.md optiontrue.tex
+<span class="ex">luatex</span> document.tex</code></pre></div>
+<p>where <code>&lt;CLI␣PATHNAME&gt;</code> corresponds to the location of the Lua CLI script file, such as <code>~/texmf/scripts/markdown/markdown-cli.lua</code> on UN*X systems or <code>C:\Users\&lt;YOUR␣USERNAME&gt;\texmf\scripts\markdown\markdown-cli.lua</code> on Windows systems. Use the command <code>kpsewhich markdown-cli.lua</code> to locate the Lua CLI script file using <a href="https://tug.org/kpathsea/" title="Kpathsea - TeX Users Group">Kpathsea</a>.</p>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<blockquote>
+<p>A single block quote or two block quotes?</p>
+</blockquote>
+<blockquote>
+<p>A single block quote</p>
+</blockquote>
+<blockquote>
+<p>or two block quotes?</p>
+</blockquote>
+</blockquote>
+<h6 id="plain-tex-example-4" class="unnumbered">Plain TeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+
+<span class="fu">\markdownBegin</span>
+&gt; A single
+
+&gt; block quote.
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\def</span>\markdownOptionBreakableBlockquotes{true}
+<span class="fu">\markdownBegin</span>
+&gt; A block quote.
+
+&gt; Another block quote.
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\bye</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<blockquote>
+<p>A single block quote.</p>
+</blockquote>
+<blockquote>
+<p>A block quote.</p>
+</blockquote>
+<blockquote>
+<p>Another block quote.</p>
+</blockquote>
+</blockquote>
+<h6 id="latex-example-4" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+&gt; A single
+
+&gt; block quote.
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown*</span>}{breakableBlockquotes}
+&gt; A block quote.
+
+&gt; Another block quote.
+<span class="kw">\end</span>{<span class="ex">markdown*</span>}
+
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<blockquote>
+<p>A single block quote.</p>
+</blockquote>
+<blockquote>
+<p>A block quote.</p>
+</blockquote>
+<blockquote>
+<p>Another block quote.</p>
+</blockquote>
+</blockquote>
+<h6 id="context-example-4" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\starttext</span>
+
+<span class="fu">\startmarkdown</span>
+&gt; A single
+
+&gt; block quote.
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\def</span>\markdownOptionBreakableBlockquotes{true}
+<span class="fu">\startmarkdown</span>
+&gt; A block quote.
+
+&gt; Another block quote.
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<blockquote>
+<p>A single block quote.</p>
+</blockquote>
+<blockquote>
+<p>A block quote.</p>
+</blockquote>
+<blockquote>
+<p>Another block quote.</p>
+</blockquote>
+</blockquote>
+<h5 id="option-citationnbsps"><span class="header-section-number">2.1.2.2.5</span> Option <code>citationNbsps</code></h5>
+<dl>
+<dt><code>citationNbsps</code> (default value: <code>true</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Replace regular spaces with non-breakable spaces inside the prenotes and postnotes of citations produced via the pandoc citation syntax extension.</p>
+</dd>
+<dt>false</dt>
+<dd><p>Do not replace regular spaces with non-breakable spaces inside the prenotes and postnotes of citations produced via the pandoc citation syntax extension.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="latex-example-5" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.bib</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode bib"><code class="sourceCode bibtex"><span class="va">@book</span>{<span class="ot">knuth:tex</span>,
+  <span class="dt">author</span>    = &quot;<span class="st">Knuth, Donald Ervin</span>&quot;,
+  <span class="dt">title</span>     = &quot;<span class="st">The </span><span class="ch">\TeX</span><span class="st"> book, volume A of Computers and typesetting</span>&quot;,
+  <span class="dt">publisher</span> = &quot;<span class="st">Addison-Wesley</span>&quot;,
+  <span class="dt">year</span>      = &quot;<span class="st">1984</span>&quot; }</code></pre></div>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>[citations]{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+The TeXbook [@knuth:tex, p. 123 and 130] is good.
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown*</span>}{citationNbsps = false}
+The TeXbook [@knuth:tex, p. 123 and 130] is good.
+<span class="kw">\end</span>{<span class="ex">markdown*</span>}
+
+<span class="bu">\bibliographystyle</span>{<span class="ex">plain</span>}
+<span class="bu">\bibliography</span>{<span class="ex">document.bib</span>}
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX and BibTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex
+<span class="ex">bibtex</span> document.aux
+<span class="ex">lualatex</span> document.tex
+<span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text, where the middot (<code>·</code>) denotes a non-breakable space:</p>
+<blockquote>
+<p>The TeXbook [1, p.·123·and·130] is good.</p>
+<p>The TeXbook [1, p. 123 and 130] is good.</p>
+<h3 id="references">References</h3>
+<p>[1] Donald·Ervin Knuth. <em>The TeXbook, volume A of Computers and typesetting.</em> Addison-Wesley, 1984.</p>
+</blockquote>
+<h5 id="option-citations"><span class="header-section-number">2.1.2.2.6</span> Option <code>citations</code></h5>
+<dl>
+<dt><code>citations</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Enable the pandoc citation syntax extension:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">Here is a simple parenthetical citation [@doe99] and here
+is a string of several [see @doe99, pp. 33-35; also
+@smith04, chap. 1].
+
+A parenthetical citation can have a [prenote @doe99] and
+a [@smith04 postnote]. The name of the author can be
+suppressed by inserting a dash before the name of an
+author as follows [-@smith04].
+
+Here is a simple text citation @doe99 and here is
+a string of several @doe99 [pp. 33-35; also @smith04,
+chap. 1]. Here is one with the name of the author
+suppressed -@doe99.</code></pre></div>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Disable the pandoc citation syntax extension.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="latex-example-6" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.bib</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode bib"><code class="sourceCode bibtex"><span class="va">@book</span>{<span class="ot">knuth:tex</span>,
+  <span class="dt">author</span>    = &quot;<span class="st">Knuth, Donald Ervin</span>&quot;,
+  <span class="dt">title</span>     = &quot;<span class="st">The </span><span class="ch">\TeX</span><span class="st"> book, volume A of Computers and typesetting</span>&quot;,
+  <span class="dt">publisher</span> = &quot;<span class="st">Addison-Wesley</span>&quot;,
+  <span class="dt">year</span>      = &quot;<span class="st">1984</span>&quot; }</code></pre></div>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>[backend=biber]{<span class="ex">biblatex</span>}
+<span class="fu">\addbibresource</span>{document.bib}
+<span class="bu">\usepackage</span>[citations]{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+The TeXbook [@knuth:tex, p. 123 and 130] was written by @knuth:tex.
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+
+<span class="fu">\printbibliography</span>
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX and Biber from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex
+<span class="ex">biber</span> document.bcf
+<span class="ex">lualatex</span> document.tex
+<span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>The TeXbook [1, p.·123 and 130] was written by Knuth [1].</p>
+<h3 id="references-1">References</h3>
+<p>[1] Donald Ervin Knuth. <em>The TeXbook, volume A of Computers and typesetting.</em> Addison-Wesley, 1984.</p>
+</blockquote>
+<h5 id="option-codespans"><span class="header-section-number">2.1.2.2.7</span> Option <code>codeSpans</code></h5>
+<dl>
+<dt><code>codeSpans</code> (default value: <code>true</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Enable the code span syntax:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">Use the <span class="bn">`printf()`</span> function.
+`<span class="bn">`There is a literal backtick (`</span>) here.``</code></pre></div>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Disable the code span syntax. This allows you to easily use the quotation mark ligatures in texts that do not contain code spans:</p>
+<pre><code>``This is a quote.&#39;&#39;</code></pre>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="lua-module-example-5" class="unnumbered">Lua module example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\directlua</span>{
+  local markdown = require(&quot;markdown&quot;)
+  local convert = markdown.new()
+  local input =
+    &quot;``This is a code span.&#39;&#39; &quot; ..
+    &quot;``This is no longer a code span.&#39;&#39;&quot;
+  tex.sprint(convert(input)) }
+<span class="fu">\par</span>
+<span class="fu">\directlua</span>{
+  local markdown = require(&quot;markdown&quot;)
+  local convert = markdown.new({codeSpans = false})
+  local input =
+    &quot;``This is a quote.&#39;&#39; &quot; ..
+    &quot;``This is another quote.&#39;&#39;&quot;
+  tex.sprint(convert(input)) }
+<span class="fu">\bye</span></code></pre></div>
+<p>Then, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p><code>This is a code span.''</code>This is no longer a code span.''</p>
+<p>“This is a quote.” “This is another quote.”</p>
+</blockquote>
+<h6 id="lua-cli-example-5" class="unnumbered">Lua CLI example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\input</span> optionfalse
+<span class="fu">\par</span>
+<span class="fu">\input</span> optiontrue
+<span class="fu">\bye</span></code></pre></div>
+<p>Using a text editor, create a text document named <code>content.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">`<span class="bn">`Is this a code span?&#39;&#39; `</span>`Or a quote?&#39;&#39;</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> codeSpans=false -- content.md optionfalse.tex
+<span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> -- content.md optiontrue.tex
+<span class="ex">luatex</span> document.tex</code></pre></div>
+<p>where <code>&lt;CLI␣PATHNAME&gt;</code> corresponds to the location of the Lua CLI script file, such as <code>~/texmf/scripts/markdown/markdown-cli.lua</code> on UN*X systems or <code>C:\Users\&lt;YOUR␣USERNAME&gt;\texmf\scripts\markdown\markdown-cli.lua</code> on Windows systems. Use the command <code>kpsewhich markdown-cli.lua</code> to locate the Lua CLI script file using <a href="https://tug.org/kpathsea/" title="Kpathsea - TeX Users Group">Kpathsea</a>.</p>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>“Is this a code span?” “Or a quote?”</p>
+<p><code>Is this a code span?''</code>Or a quote?''</p>
+</blockquote>
+<h6 id="plain-tex-example-5" class="unnumbered">Plain TeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+
+<span class="fu">\markdownBegin</span>
+``This is a code span.&#39;&#39;
+``This is no longer a code span.&#39;&#39;
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\def</span>\markdownOptionCodeSpans{false}
+<span class="fu">\markdownBegin</span>
+``This is a quote.&#39;&#39;
+``This is another quote.&#39;&#39;
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\bye</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p><code>This is a code span.''</code>This is no longer a code span.''</p>
+<p>“This is a quote.” “This is another quote.”</p>
+</blockquote>
+<h6 id="latex-example-7" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+``This is a code span.&#39;&#39;
+``This is no longer a code span.&#39;&#39;
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown*</span>}{codeSpans=false}
+``This is a quote.&#39;&#39;
+``This is another quote.&#39;&#39;
+<span class="kw">\end</span>{<span class="ex">markdown*</span>}
+
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p><code>This is a code span.''</code>This is no longer a code span.''</p>
+<p>“This is a quote.” “This is another quote.”</p>
+</blockquote>
+<h6 id="context-example-5" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\starttext</span>
+
+<span class="fu">\startmarkdown</span>
+``This is a code span.&#39;&#39;
+``This is no longer a code span.&#39;&#39;
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\def</span>\markdownOptionCodeSpans{false}
+<span class="fu">\startmarkdown</span>
+``This is a quote.&#39;&#39;
+``This is another quote.&#39;&#39;
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p><code>This is a code span.''</code>This is no longer a code span.''</p>
+<p>“This is a quote.” “This is another quote.”</p>
+</blockquote>
+<h5 id="option-contentblocks"><span class="header-section-number">2.1.2.2.8</span> Option <code>contentBlocks</code></h5>
+<dl>
+<dt><code>contentBlocks</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Enable the iA Writer content blocks syntax extension:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">http://example.com/minard.jpg (Napoleon&#39;s
+  disastrous Russian campaign of 1812)
+/Flowchart.png &quot;Engineering Flowchart&quot;
+/Savings Account.csv &#39;Recent Transactions&#39;
+/Example.swift
+/Lorem Ipsum.txt</code></pre></div>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Disable the iA Writer content blocks syntax extension.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="latex-example-8" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>table.csv</code> with the following content:</p>
+<pre class="csv"><code>Name,Surname,Born
+Albert,Einstein,1879
+Marie,Curie,1867
+Thomas,Edison,1847</code></pre>
+<p>Create also a text document named <code>markdown-languages.json</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="op">{</span>
+  <span class="st">&quot;tex&quot;</span><span class="op">:</span> <span class="st">&quot;LaTeX&quot;</span>
+<span class="op">}</span></code></pre></div>
+<p>Create also a text document named <code>code.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex">This is an example code listing in <span class="fu">\LaTeX</span>.</code></pre></div>
+<p>Create also a text document named <code>part.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">This is a *transcluded markdown document*.</code></pre></div>
+<p>Create also a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">minted</span>}
+<span class="bu">\usepackage</span>[contentBlocks]{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+/table.csv  (An example table)
+/code.tex   (An example code listing)
+/part.md    (A file transclusion example)
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> --shell-escape document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Surname</th>
+<th>Born</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Albert</td>
+<td>Einstein</td>
+<td>1879</td>
+</tr>
+<tr class="even">
+<td>Marie</td>
+<td>Curie</td>
+<td>1867</td>
+</tr>
+<tr class="odd">
+<td>Thomas</td>
+<td>Edison</td>
+<td>1847</td>
+</tr>
+</tbody>
+</table>
+<p>Table 1: An example table</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex">This is an example code listing in <span class="fu">\LaTeX</span>.</code></pre></div>
+<p>This is a <em>transcluded markdown document</em>.</p>
+</blockquote>
+<h6 id="context-example-6" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>table.csv</code> with the following content:</p>
+<pre class="csv"><code>Name,Surname,Born
+Albert,Einstein,1879
+Marie,Curie,1867
+Thomas,Edison,1847</code></pre>
+<p>Create also a text document named <code>markdown-languages.json</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="op">{</span>
+  <span class="st">&quot;tex&quot;</span><span class="op">:</span> <span class="st">&quot;ConTeXt&quot;</span>
+<span class="op">}</span></code></pre></div>
+<p>Create also a text document named <code>code.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex">This is an example code listing in <span class="fu">\ConTeXt</span>.</code></pre></div>
+<p>Create also a text document named <code>part.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">This is a *transcluded markdown document*.</code></pre></div>
+<p>Create also a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\def</span>\markdownOptionContentBlocks{true}
+<span class="fu">\definetyping</span> [ConTeXt]
+<span class="fu">\setuptyping</span>  [ConTeXt] [option=TEX]
+<span class="fu">\starttext</span>
+<span class="fu">\startmarkdown</span>
+/table.csv  (An example table)
+/code.tex   (An example code listing)
+/part.md    (A file transclusion example)
+<span class="fu">\stopmarkdown</span>
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Surname</th>
+<th>Born</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Albert</td>
+<td>Einstein</td>
+<td>1879</td>
+</tr>
+<tr class="even">
+<td>Marie</td>
+<td>Curie</td>
+<td>1867</td>
+</tr>
+<tr class="odd">
+<td>Thomas</td>
+<td>Edison</td>
+<td>1847</td>
+</tr>
+</tbody>
+</table>
+<p>Table 1: An example table</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex">This is an example code listing in <span class="fu">\ConTeXt</span>.</code></pre></div>
+<p>This is a <em>transcluded markdown document</em>.</p>
+</blockquote>
+<h5 id="option-contentblockslanguagemap"><span class="header-section-number">2.1.2.2.9</span> Option <code>contentBlocksLanguageMap</code></h5>
+<dl>
+<dt><code>contentBlocksLanguageMap</code> (default value: <code>&quot;markdown-languages.json&quot;</code>)</dt>
+<dd><p>The filename of the JSON file that maps filename extensions to programming language names in the iA Writer content blocks.</p>
+</dd>
+</dl>
+<h6 id="latex-example-9" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>table.csv</code> with the following content:</p>
+<pre class="csv"><code>Name,Surname,Born
+Albert,Einstein,1879
+Marie,Curie,1867
+Thomas,Edison,1847</code></pre>
+<p>Create also a text document named <code>language-map.json</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="op">{</span>
+  <span class="st">&quot;tex&quot;</span><span class="op">:</span> <span class="st">&quot;LaTeX&quot;</span>
+<span class="op">}</span></code></pre></div>
+<p>Create also a text document named <code>code.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex">This is an example code listing in <span class="fu">\LaTeX</span>.</code></pre></div>
+<p>Create also a text document named <code>part.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">This is a *transcluded markdown document*.</code></pre></div>
+<p>Create also a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">minted</span>}
+<span class="bu">\usepackage</span>[contentBlocks]{<span class="ex">markdown</span>}
+<span class="fu">\markdownSetup</span>{
+  contentBlocksLanguageMap = {language-map.json},
+}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+/table.csv  (An example table)
+/code.tex   (An example code listing)
+/part.md    (A file transclusion example)
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> --shell-escape document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Surname</th>
+<th>Born</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Albert</td>
+<td>Einstein</td>
+<td>1879</td>
+</tr>
+<tr class="even">
+<td>Marie</td>
+<td>Curie</td>
+<td>1867</td>
+</tr>
+<tr class="odd">
+<td>Thomas</td>
+<td>Edison</td>
+<td>1847</td>
+</tr>
+</tbody>
+</table>
+<p>Table 1: An example table</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex">This is an example code listing in <span class="fu">\LaTeX</span>.</code></pre></div>
+<p>This is a <em>transcluded markdown document</em>.</p>
+</blockquote>
+<h6 id="context-example-7" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>table.csv</code> with the following content:</p>
+<pre class="csv"><code>Name,Surname,Born
+Albert,Einstein,1879
+Marie,Curie,1867
+Thomas,Edison,1847</code></pre>
+<p>Create also a text document named <code>language-map.json</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="op">{</span>
+  <span class="st">&quot;tex&quot;</span><span class="op">:</span> <span class="st">&quot;ConTeXt&quot;</span>
+<span class="op">}</span></code></pre></div>
+<p>Create also a text document named <code>code.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex">This is an example code listing in <span class="fu">\ConTeXt</span>.</code></pre></div>
+<p>Create also a text document named <code>part.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">This is a *transcluded markdown document*.</code></pre></div>
+<p>Create also a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\def</span>\markdownOptionContentBlocks{true}
+<span class="fu">\def</span>\markdownOptionContentBlocksLanguageMap{language-map.json}
+<span class="fu">\definetyping</span> [ConTeXt]
+<span class="fu">\setuptyping</span>  [ConTeXt] [option=TEX]
+<span class="fu">\starttext</span>
+<span class="fu">\startmarkdown</span>
+/table.csv  (An example table)
+/code.tex   (An example code listing)
+/part.md    (A file transclusion example)
+<span class="fu">\stopmarkdown</span>
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Surname</th>
+<th>Born</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Albert</td>
+<td>Einstein</td>
+<td>1879</td>
+</tr>
+<tr class="even">
+<td>Marie</td>
+<td>Curie</td>
+<td>1867</td>
+</tr>
+<tr class="odd">
+<td>Thomas</td>
+<td>Edison</td>
+<td>1847</td>
+</tr>
+</tbody>
+</table>
+<p>Table 1: An example table</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex">This is an example code listing in <span class="fu">\ConTeXt</span>.</code></pre></div>
+<p>This is a <em>transcluded markdown document</em>.</p>
+</blockquote>
+<h5 id="option-definitionlists"><span class="header-section-number">2.1.2.2.10</span> Option <code>definitionLists</code></h5>
+<dl>
+<dt><code>definitionLists</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Enable the pandoc definition list syntax extension:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">Term 1
+
+:   Definition 1
+
+Term 2 with *inline markup*
+
+:   Definition 2
+
+<span class="bn">        { some code, part of Definition 2 }</span>
+
+<span class="bn">    Third paragraph of definition 2.</span></code></pre></div>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Disable the pandoc definition list syntax extension.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="latex-example-10" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>[definitionLists]{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+Term 1
+
+:   Definition 1
+
+Term 2 with *inline markup*
+
+:   Definition 2
+
+        { some code, part of Definition 2 }
+
+    Third paragraph of definition 2.
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<dl>
+<dt>Term 1</dt>
+<dd><p>Definition 1</p>
+</dd>
+<dt>Term 2 with <em>inline markup</em></dt>
+<dd><p>Definition 2</p>
+<pre><code>{ some code, part of Definition 2 }</code></pre>
+<p>Third paragraph of definition 2.</p>
+</dd>
+</dl>
+</blockquote>
+<h6 id="context-example-8" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\def</span>\markdownOptionDefinitionLists{true}
+<span class="fu">\starttext</span>
+<span class="fu">\startmarkdown</span>
+Term 1
+
+:   Definition 1
+
+Term 2 with *inline markup*
+
+:   Definition 2
+
+        { some code, part of Definition 2 }
+
+    Third paragraph of definition 2.
+<span class="fu">\stopmarkdown</span>
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<dl>
+<dt>Term 1</dt>
+<dd><p>Definition 1</p>
+</dd>
+<dt>Term 2 with <em>inline markup</em></dt>
+<dd><p>Definition 2</p>
+<pre><code>{ some code, part of Definition 2 }</code></pre>
+<p>Third paragraph of definition 2.</p>
+</dd>
+</dl>
+</blockquote>
+<h5 id="option-fencedcode"><span class="header-section-number">2.1.2.2.11</span> Option <code>fencedCode</code></h5>
+<dl>
+<dt><code>fencedCode</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Enable the commonmark fenced code block extension:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">~~~ js
+if (a &gt; 3) {
+<span class="bn">    moveShip(5 * gravity, DOWN);</span>
+}
+~~~~~~
+
+  ``` html
+  &lt;pre&gt;
+<span class="bn">    &lt;code&gt;</span>
+<span class="bn">      // Some comments</span>
+<span class="bn">      line 1 of code</span>
+<span class="bn">      line 2 of code</span>
+<span class="bn">      line 3 of code</span>
+<span class="bn">    &lt;/code&gt;</span>
+  &lt;/pre&gt;
+  ```</code></pre></div>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Disable the commonmark fenced code block extension.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="latex-example-11" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">minted</span>}
+<span class="bu">\usepackage</span>[fencedCode]{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+~~~ js
+if (a &gt; 3) {
+    moveShip(5 * gravity, DOWN);
+}
+~~~~~~
+
+  ``` html
+  &lt;pre&gt;
+    &lt;code&gt;
+      // Some comments
+      line 1 of code
+      line 2 of code
+      line 3 of code
+    &lt;/code&gt;
+  &lt;/pre&gt;
+  ```
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> --shell-escape document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="cf">if</span> (a <span class="op">&gt;</span> <span class="dv">3</span>) <span class="op">{</span>
+    <span class="at">moveShip</span>(<span class="dv">5</span> <span class="op">*</span> gravity<span class="op">,</span> DOWN)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;pre&gt;</span>
+  <span class="kw">&lt;code&gt;</span>
+    // Some comments
+    line 1 of code
+    line 2 of code
+    line 3 of code
+  <span class="kw">&lt;/code&gt;</span>
+<span class="kw">&lt;/pre&gt;</span></code></pre></div>
+</blockquote>
+<h6 id="context-example-9" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\def</span>\markdownOptionFencedCode{true}
+<span class="fu">\definetyping</span> [js]
+<span class="fu">\definetyping</span> [html]
+<span class="fu">\setuptyping</span>  [html] [option=XML]
+<span class="fu">\starttext</span>
+<span class="fu">\startmarkdown</span>
+~~~ js
+if (a &gt; 3) {
+    moveShip(5 * gravity, DOWN);
+}
+~~~~~~
+
+  ``` html
+  &lt;pre&gt;
+    &lt;code&gt;
+      // Some comments
+      line 1 of code
+      line 2 of code
+      line 3 of code
+    &lt;/code&gt;
+  &lt;/pre&gt;
+  ```
+<span class="fu">\stopmarkdown</span>
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="cf">if</span> (a <span class="op">&gt;</span> <span class="dv">3</span>) <span class="op">{</span>
+    <span class="at">moveShip</span>(<span class="dv">5</span> <span class="op">*</span> gravity<span class="op">,</span> DOWN)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;pre&gt;</span>
+  <span class="kw">&lt;code&gt;</span>
+    // Some comments
+    line 1 of code
+    line 2 of code
+    line 3 of code
+  <span class="kw">&lt;/code&gt;</span>
+<span class="kw">&lt;/pre&gt;</span></code></pre></div>
+</blockquote>
+<h5 id="option-footnotes"><span class="header-section-number">2.1.2.2.12</span> Option <code>footnotes</code></h5>
+<dl>
+<dt><code>footnotes</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Enable the pandoc footnote syntax extension:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">Here is a footnote reference,<span class="ot">[^1]</span> and another.<span class="ot">[^longnote]</span>
+
+<span class="ot">[^1]</span>: Here is the footnote.
+
+<span class="ot">[^longnote]</span>: Here&#39;s one with multiple blocks.
+
+<span class="bn">    Subsequent paragraphs are indented to show that they</span>
+belong to the previous footnote.
+
+<span class="bn">        { some.code }</span>
+
+<span class="bn">    The whole paragraph can be indented, or just the</span>
+<span class="bn">    first line.  In this way, multi-paragraph footnotes</span>
+<span class="bn">    work like multi-paragraph list items.</span>
+
+This paragraph won&#39;t be part of the note, because it
+isn&#39;t indented.</code></pre></div>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Disable the pandoc footnote syntax extension.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="latex-example-12" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>[footnotes]{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+Here is a footnote reference,[^1] and another.[^longnote]
+
+[^1]: Here is the footnote.
+
+[^longnote]: Here&#39;s one with multiple blocks.
+
+    Subsequent paragraphs are indented to show that they
+belong to the previous footnote.
+
+        { some.code }
+
+    The whole paragraph can be indented, or just the
+    first line.  In this way, multi-paragraph footnotes
+    work like multi-paragraph list items.
+
+This paragraph won&#39;t be part of the note, because it
+isn&#39;t indented.
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>Here is a footnote reference,<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> and another.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p>This paragraph won't be part of the note, because it isn't indented.</p>
+</blockquote>
+<h6 id="context-example-10" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\def</span>\markdownOptionFootnotes{true}
+<span class="fu">\starttext</span>
+<span class="fu">\startmarkdown</span>
+Here is a footnote reference,[^1] and another.[^longnote]
+
+[^1]: Here is the footnote.
+
+[^longnote]: Here&#39;s one with multiple blocks.
+
+    Subsequent paragraphs are indented to show that they
+belong to the previous footnote.
+
+        { some.code }
+
+    The whole paragraph can be indented, or just the
+    first line.  In this way, multi-paragraph footnotes
+    work like multi-paragraph list items.
+
+This paragraph won&#39;t be part of the note, because it
+isn&#39;t indented.
+<span class="fu">\stopmarkdown</span>
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>Here is a footnote reference,<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> and another.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
+<p>This paragraph won't be part of the note, because it isn't indented.</p>
+</blockquote>
+<h5 id="option-hashenumerators"><span class="header-section-number">2.1.2.2.13</span> Option <code>hashEnumerators</code></h5>
+<dl>
+<dt><code>hashEnumerators</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Enable the use of hash symbols (<code>#</code>) as ordered item list markers:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">#. Bird
+#. McHale
+#. Parish</code></pre></div>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Disable the use of hash symbols (<code>#</code>) as ordered item list markers.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="latex-example-13" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+#. Bird
+#. McHale
+#. Parish
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown*</span>}{hashEnumerators}
+#. Bird
+#. McHale
+#. Parish
+<span class="kw">\end</span>{<span class="ex">markdown*</span>}
+
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<h1 id="bird">. Bird</h1>
+<h1 id="mchale">. McHale</h1>
+<h1 id="parish">. Parish</h1>
+<ol>
+<li>Bird</li>
+<li>McHale</li>
+<li>Parish</li>
+</ol>
+</blockquote>
+<h6 id="context-example-11" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\starttext</span>
+
+<span class="fu">\startmarkdown</span>
+#. Bird
+#. McHale
+#. Parish
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\def</span>\markdownOptionHashEnumerators{true}
+<span class="fu">\startmarkdown</span>
+#. Bird
+#. McHale
+#. Parish
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<h1 id="bird-1">. Bird</h1>
+<h1 id="mchale-1">. McHale</h1>
+<h1 id="parish-1">. Parish</h1>
+<ol>
+<li>Bird</li>
+<li>McHale</li>
+<li>Parish</li>
+</ol>
+</blockquote>
+<h5 id="option-html"><span class="header-section-number">2.1.2.2.14</span> Option <code>html</code></h5>
+<dl>
+<dt><code>html</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Enable the recognition of HTML tags, block elements, comments, HTML instructions, and entities in the input. Tags, block elements (along with contents), HTML instructions, and comments will be ignored and HTML entities will be replaced with the corresponding Unicode codepoints.</p>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Disable the recognition of HTML markup. Any HTML markup in the input will be rendered as plain text.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>When the option is enabled, HTML entities are currently incorrectly parsed. See <a href="https://github.com/Witiko/markdown/issues/38" title="Tabs are stripped even with the `preserveTabs=true`               Lua option enabled">the corresponding issue</a> in the package repository.</p>
+<h6 id="lua-module-example-6" class="unnumbered">Lua module example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\directlua</span>{
+  local markdown = require(&quot;markdown&quot;)
+  local convert = markdown.new()
+  local newline = [[^^J^^J]]
+  local input =
+    &quot;&lt;div&gt;*There is no block tag support.*&lt;/div&gt;&quot;        .. newline ..
+    &quot;*There is no &lt;inline tag=&quot;tag&quot;&gt;&lt;/inline&gt; support.*&quot; .. newline ..
+    &quot;_There is no &lt;!-- comment --&gt; support._&quot;            .. newline ..
+    &quot;_There is no &lt;? HTML instruction ?&gt; support._&quot;
+  tex.sprint(convert(input)) }
+<span class="fu">\par</span>
+<span class="fu">\directlua</span>{
+  local markdown = require(&quot;markdown&quot;)
+  local convert = markdown.new({html = true})
+  local input =
+    &quot;&lt;div&gt;*There is block tag support.*&lt;/div&gt;&quot;        .. newline ..
+    &quot;*There is &lt;inline tag=&quot;tag&quot;&gt;&lt;/inline&gt; support.*&quot; .. newline ..
+    &quot;_There is &lt;!-- comment --&gt; support._&quot;            .. newline ..
+    &quot;_There is &lt;? HTML instruction ?&gt; support._&quot;
+  tex.sprint(convert(input)) }
+<span class="fu">\bye</span></code></pre></div>
+<p>Then, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>&lt;div&gt;There is no block tag support.&lt;/div&gt; There is no &lt;inline tag=”tag”&gt;&lt;/inline&gt; support. There is no &lt;!-- comment --&gt; support. There is no &lt;? HTML instruction ?&gt; support.</p>
+<p>There is support. There is support. There is support.</p>
+</blockquote>
+<h6 id="lua-cli-example-6" class="unnumbered">Lua CLI example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\input</span> optionfalse
+<span class="fu">\par</span>
+<span class="fu">\input</span> optiontrue
+<span class="fu">\bye</span></code></pre></div>
+<p>Using a text editor, create a text document named <code>content.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div&gt;</span>
+*Is there block tag support?*
+<span class="kw">&lt;/div&gt;</span>
+*Is there <span class="kw">&lt;inline</span><span class="ot"> tag=</span><span class="st">&quot;tag&quot;</span><span class="kw">&gt;&lt;/inline&gt;</span> support?*
+_Is there <span class="co">&lt;!-- comment --&gt;</span> support?_
+_Is there <span class="kw">&lt;?</span> HTML instruction <span class="kw">?&gt;</span> support?_</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> -- content.md optionfalse.tex
+<span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> html=true -- content.md optiontrue.tex
+<span class="ex">luatex</span> document.tex</code></pre></div>
+<p>where <code>&lt;CLI␣PATHNAME&gt;</code> corresponds to the location of the Lua CLI script file, such as <code>~/texmf/scripts/markdown/markdown-cli.lua</code> on UN*X systems or <code>C:\Users\&lt;YOUR␣USERNAME&gt;\texmf\scripts\markdown\markdown-cli.lua</code> on Windows systems. Use the command <code>kpsewhich markdown-cli.lua</code> to locate the Lua CLI script file using <a href="https://tug.org/kpathsea/" title="Kpathsea - TeX Users Group">Kpathsea</a>.</p>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>&lt;div&gt;Is there block tag support?&lt;/div&gt; Is there &lt;inline tag=”tag”&gt;&lt;/inline&gt; support? Is there &lt;!-- comment --&gt; support? Is there &lt;? HTML instruction ?&gt; support?</p>
+<p>Is there support? Is there support? Is there support?</p>
+</blockquote>
+<h6 id="plain-tex-example-6" class="unnumbered">Plain TeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+
+<span class="fu">\markdownBegin</span>
+&lt;div&gt;
+*There is no block tag support.*
+&lt;/div&gt;
+*There is no &lt;inline tag=&quot;tag&quot;&gt;&lt;/inline&gt; support.*
+_There is no &lt;!-- comment --&gt; support._
+_There is no &lt;? HTML instruction ?&gt; support._
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\def</span>\markdownOptionHtml{true}
+<span class="fu">\markdownBegin</span>
+&lt;div&gt;
+*There is block tag support.*
+&lt;/div&gt;
+*There is &lt;inline tag=&quot;tag&quot;&gt;&lt;/inline&gt; support.*
+_There is &lt;!-- comment --&gt; support._
+_There is &lt;? HTML instruction ?&gt; support._
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\bye</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>&lt;div&gt;There is no block tag support.&lt;/div&gt; There is no &lt;inline tag=”tag”&gt;&lt;/inline&gt; support. There is no &lt;!-- comment --&gt; support. There is no &lt;? HTML instruction ?&gt; support.</p>
+<p>There is support. There is support. There is support.</p>
+</blockquote>
+<h6 id="latex-example-14" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+&lt;div&gt;
+*There is no block tag support.*
+&lt;/div&gt;
+*There is no &lt;inline tag=&quot;tag&quot;&gt;&lt;/inline&gt; support.*
+_There is no &lt;!-- comment --&gt; support._
+_There is no &lt;? HTML instruction ?&gt; support._
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown*</span>}{html}
+&lt;div&gt;
+*There is block tag support.*
+&lt;/div&gt;
+*There is &lt;inline tag=&quot;tag&quot;&gt;&lt;/inline&gt; support.*
+_There is &lt;!-- comment --&gt; support._
+_There is &lt;? HTML instruction ?&gt; support._
+<span class="kw">\end</span>{<span class="ex">markdown*</span>}
+
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>&lt;div&gt;There is no block tag support.&lt;/div&gt; There is no &lt;inline tag=”tag”&gt;&lt;/inline&gt; support. There is no &lt;!-- comment --&gt; support. There is no &lt;? HTML instruction ?&gt; support.</p>
+<p>There is support. There is support. There is support.</p>
+</blockquote>
+<h6 id="context-example-12" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\starttext</span>
+
+<span class="fu">\startmarkdown</span>
+&lt;div&gt;
+*There is no block tag support.*
+&lt;/div&gt;
+*There is no &lt;inline tag=&quot;tag&quot;&gt;&lt;/inline&gt; support.*
+_There is no &lt;!-- comment --&gt; support._
+_There is no &lt;? HTML instruction ?&gt; support._
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\def</span>\markdownOptionHtml{true}
+<span class="fu">\startmarkdown</span>
+&lt;div&gt;
+*There is block tag support.*
+&lt;/div&gt;
+*There is &lt;inline tag=&quot;tag&quot;&gt;&lt;/inline&gt; support.*
+_There is &lt;!-- comment --&gt; support._
+_There is &lt;? HTML instruction ?&gt; support._
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>&lt;div&gt;There is no block tag support.&lt;/div&gt; There is no &lt;inline tag=”tag”&gt;&lt;/inline&gt; support. There is no &lt;!-- comment --&gt; support. There is no &lt;? HTML instruction ?&gt; support.</p>
+<p>There is support. There is support. There is support.</p>
+</blockquote>
+<h5 id="option-hybrid"><span class="header-section-number">2.1.2.2.15</span> Option <code>hybrid</code></h5>
+<dl>
+<dt><code>hybrid</code> (default value: <code>true</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Disable the escaping of special plain TeX characters, which makes it possible to intersperse your markdown markup with TeX code. The intended usage is in documents prepared manually by a human author. In such documents, it can often be desirable to mix TeX and markdown markup freely.</p>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Enable the escaping of special plain TeX characters outside verbatim environments, so that they are not interpretted by TeX. This is encouraged when typesetting automatically generated content or markdown documents that were not prepared with this package in mind.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="lua-module-example-7" class="unnumbered">Lua module example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\directlua</span>{
+  local markdown = require(&quot;markdown&quot;)
+  local convert_safe = markdown.new()
+  local convert_unsafe = markdown.new({hybrid = true})
+  local input = [[<span class="ss">$</span><span class="sc">\noexpand\sqrt</span><span class="ss">{-1}$</span> *equals* <span class="ss">$i$</span>.]]
+  tex.sprint(convert_safe(input) .. &quot; &quot; .. convert_unsafe(input)) }
+<span class="fu">\bye</span></code></pre></div>
+<p>Then, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>$\sqrt {-1}$ <em>equals</em> $i$. √-̅1̅ <em>equals</em> <span class="math inline"><em>i</em></span>.</p>
+</blockquote>
+<h6 id="lua-cli-example-7" class="unnumbered">Lua CLI example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\input</span> optionfalse
+<span class="fu">\input</span> optiontrue
+<span class="fu">\bye</span></code></pre></div>
+<p>Using a text editor, create a text document named <code>content.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">$\sqrt{-1}$ *equals* $i$.</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> -- content.md optionfalse.tex
+<span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> hybrid=true -- content.md optiontrue.tex
+<span class="ex">luatex</span> document.tex</code></pre></div>
+<p>where <code>&lt;CLI␣PATHNAME&gt;</code> corresponds to the location of the Lua CLI script file, such as <code>~/texmf/scripts/markdown/markdown-cli.lua</code> on UN*X systems or <code>C:\Users\&lt;YOUR␣USERNAME&gt;\texmf\scripts\markdown\markdown-cli.lua</code> on Windows systems. Use the command <code>kpsewhich markdown-cli.lua</code> to locate the Lua CLI script file using <a href="https://tug.org/kpathsea/" title="Kpathsea - TeX Users Group">Kpathsea</a>.</p>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>$\sqrt {-1}$ <em>equals</em> $i$. √-̅1̅ <em>equals</em> <span class="math inline"><em>i</em></span>.</p>
+</blockquote>
+<h6 id="plain-tex-example-7" class="unnumbered">Plain TeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\input</span> lmfonts
+<span class="fu">\markdownBegin</span>
+<span class="ss">$</span><span class="sc">\sqrt</span><span class="ss">{-1}$</span> *equals* <span class="ss">$i$</span>.
+<span class="fu">\markdownEnd</span>
+<span class="fu">\def</span>\markdownOptionHybrid{true}
+<span class="fu">\markdownBegin</span>
+<span class="ss">$</span><span class="sc">\sqrt</span><span class="ss">{-1}$</span> *equals* <span class="ss">$i$</span>.
+<span class="fu">\markdownEnd</span>
+<span class="fu">\bye</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>$\sqrt {-1}$ <em>equals</em> $i$. √-̅1̅ <em>equals</em> <span class="math inline"><em>i</em></span>.</p>
+</blockquote>
+<h6 id="latex-example-15" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+<span class="ss">$</span><span class="sc">\sqrt</span><span class="ss">{-1}$</span> *equals* <span class="ss">$i$</span>.
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">markdown*</span>}{hybrid}
+<span class="ss">$</span><span class="sc">\sqrt</span><span class="ss">{-1}$</span> *equals* <span class="ss">$i$</span>.
+<span class="kw">\end</span>{<span class="ex">markdown*</span>}
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>$\sqrt {-1}$ <em>equals</em> $i$. √-̅1̅ <em>equals</em> <span class="math inline"><em>i</em></span>.</p>
+</blockquote>
+<h6 id="context-example-13" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\starttext</span>
+<span class="fu">\startmarkdown</span>
+<span class="ss">$</span><span class="sc">\sqrt</span><span class="ss">{-1}$</span> *equals* <span class="ss">$i$</span>.
+<span class="fu">\stopmarkdown</span>
+<span class="fu">\def</span>\markdownOptionHybrid{true}
+<span class="fu">\startmarkdown</span>
+<span class="ss">$</span><span class="sc">\sqrt</span><span class="ss">{-1}$</span> *equals* <span class="ss">$i$</span>.
+<span class="fu">\stopmarkdown</span>
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>$\sqrt {-1}$ <em>equals</em> $i$. √-̅1̅ <em>equals</em> <span class="math inline"><em>i</em></span>.</p>
+</blockquote>
+<h5 id="option-inlinefootnotes"><span class="header-section-number">2.1.2.2.16</span> Option <code>inlineFootnotes</code></h5>
+<dl>
+<dt><code>inlineFootnotes</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Enable the pandoc inline footnote syntax extension:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">Here is an inline note.^[Inlines notes are easier to
+write, since you don&#39;t have to pick an identifier and
+move down to type the note.]</code></pre></div>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Disable the pandoc inline footnote syntax extension.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="latex-example-16" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>[footnotes, inlineFootnotes]{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+Here is an inline note.^[Inlines notes are easier to
+write, since you don&#39;t have to pick an identifier and
+move down to type the note.]
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>Here is an inline note.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a></p>
+</blockquote>
+<h6 id="context-example-14" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\def</span>\markdownOptionFootnotes{true}
+<span class="fu">\def</span>\markdownOptionInlineFootnotes{true}
+<span class="fu">\starttext</span>
+<span class="fu">\startmarkdown</span>
+Here is an inline note.^[Inlines notes are easier to
+write, since you don&#39;t have to pick an identifier and
+move down to type the note.]
+<span class="fu">\stopmarkdown</span>
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>Here is an inline note.<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a></p>
+</blockquote>
+<h5 id="option-preservetabs"><span class="header-section-number">2.1.2.2.17</span> Option <code>preserveTabs</code></h5>
+<dl>
+<dt><code>preserveTabs</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Preserve all tabs in the input.</p>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Convert any tabs in the input to spaces.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>This option is currently non-functional. See <a href="https://github.com/Witiko/markdown/issues/38" title="Tabs are stripped even with the `preserveTabs=true`               Lua option enabled">the corresponding issue</a> in the package repository.</p>
+<h5 id="option-smartellipses"><span class="header-section-number">2.1.2.2.18</span> Option <code>smartEllipses</code></h5>
+<dl>
+<dt><code>smartEllipses</code> (default value: <code>false</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Convert any ellipses in the input to the <code>\markdownRendererEllipsis</code> TeX macro.</p>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Preserve all ellipses in the input.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="lua-module-example-8" class="unnumbered">Lua module example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\def</span>\markdownRendererEllipsis{. . .}
+<span class="fu">\input</span> lmfonts
+<span class="fu">\directlua</span>{
+  local markdown = require(&quot;markdown&quot;)
+  local convert = markdown.new()
+  input = &quot;These are just three regular dots ...&quot;
+  tex.sprint(convert(input)) }
+<span class="fu">\par</span>
+<span class="fu">\directlua</span>{
+  local markdown = require(&quot;markdown&quot;)
+  local convert = markdown.new({smartEllipses = true})
+  input = &quot;... and this is a victorian ellipsis.&quot;
+  tex.sprint(convert(input)) }
+<span class="fu">\bye</span></code></pre></div>
+<p>Then, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>These are just three regular dots ...</p>
+<p>. . . and this is a victorian ellipsis.</p>
+</blockquote>
+<h6 id="lua-cli-example-8" class="unnumbered">Lua CLI example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\def</span>\markdownRendererEllipsis{. . .}
+<span class="fu">\input</span> lmfonts
+<span class="fu">\input</span> optionfalse
+<span class="fu">\par</span>
+<span class="fu">\input</span> optiontrue
+<span class="fu">\bye</span></code></pre></div>
+<p>Using a text editor, create a text document named <code>content.md</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">Are these just three regular dots, a victorian ellipsis, or ... ?</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> -- content.md optionfalse.tex
+<span class="ex">texlua</span> <span class="op">&lt;</span>CLI␣PATHNAME<span class="op">&gt;</span> smartEllipses=true -- content.md optiontrue.tex
+<span class="ex">luatex</span> document.tex</code></pre></div>
+<p>where <code>&lt;CLI␣PATHNAME&gt;</code> corresponds to the location of the Lua CLI script file, such as <code>~/texmf/scripts/markdown/markdown-cli.lua</code> on UN*X systems or <code>C:\Users\&lt;YOUR␣USERNAME&gt;\texmf\scripts\markdown\markdown-cli.lua</code> on Windows systems. Use the command <code>kpsewhich markdown-cli.lua</code> to locate the Lua CLI script file using <a href="https://tug.org/kpathsea/" title="Kpathsea - TeX Users Group">Kpathsea</a>.</p>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>Are these just three regular dots, a victorian ellipsis, or ... ?</p>
+<p>Are these just three regular dots, a victorian ellipsis, or . . . ?</p>
+</blockquote>
+<h6 id="plain-tex-example-8" class="unnumbered">Plain TeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\def</span>\markdownRendererEllipsis{. . .}
+
+<span class="fu">\markdownBegin</span>
+These are just three regular dots ...
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\def</span>\markdownOptionSmartEllipses{true}
+<span class="fu">\markdownBegin</span>
+... and this is a victorian ellipsis.
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\bye</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>These are just three regular dots ...</p>
+<p>. . . and this is a victorian ellipsis.</p>
+</blockquote>
+<h6 id="latex-example-17" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">markdown</span>}
+<span class="fu">\markdownSetup</span>{
+  renderers = {
+    ellipsis = {. . .} }}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+These are just three regular dots ...
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown*</span>}{smartEllipses}
+... and this is a victorian ellipsis.
+<span class="kw">\end</span>{<span class="ex">markdown*</span>}
+
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>These are just three regular dots ...</p>
+<p>. . . and this is a victorian ellipsis.</p>
+</blockquote>
+<h6 id="context-example-15" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\def</span>\markdownRendererEllipsis{. . .}
+<span class="fu">\starttext</span>
+
+<span class="fu">\startmarkdown</span>
+These are just three regular dots ...
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\def</span>\markdownOptionSmartEllipses{true}
+<span class="fu">\startmarkdown</span>
+... and this is a victorian ellipsis.
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>These are just three regular dots ...</p>
+<p>. . . and this is a victorian ellipsis.</p>
+</blockquote>
+<h5 id="option-startnumber"><span class="header-section-number">2.1.2.2.19</span> Option <code>startNumber</code></h5>
+<dl>
+<dt><code>startNumber</code> (default value: <code>true</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Make the number in the first item of an ordered lists significant. The item numbers will be passed to the <code>\markdownRendererOlItemWithNumber</code> TeX macro.</p>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Ignore the numbers in the ordered list items. Each item will only produce a <code>\markdownRendererOlItem</code> TeX macro.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="latex-example-18" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+The following list respects the numbers specified in the markup:
+
+3. third item
+4. fourth item
+5. fifth item
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown*</span>}{startNumber=false}
+The following list does not respect the numbers specified in the
+markup:
+
+3. third item
+4. fourth item
+5. fifth item
+<span class="kw">\end</span>{<span class="ex">markdown*</span>}
+
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>The following list respects the numbers specified in the markup:</p>
+<ol start="3" style="list-style-type: decimal">
+<li>third item</li>
+<li>fourth item</li>
+<li>fifth item</li>
+</ol>
+<p>The following list does not respect the numbers specified in the markup:</p>
+<ol style="list-style-type: decimal">
+<li>third item</li>
+<li>fourth item</li>
+<li>fifth item</li>
+</ol>
+</blockquote>
+<h6 id="context-example-16" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\starttext</span>
+
+<span class="fu">\startmarkdown</span>
+The following list respects the numbers specified in the markup:
+
+3. third item
+4. fourth item
+5. fifth item
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\def</span>\markdownOptionStartNumber{false}
+<span class="fu">\startmarkdown</span>
+The following list respects the numbers specified in the markup:
+
+3. third item
+4. fourth item
+5. fifth item
+<span class="fu">\stopmarkdown</span>
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>The following list respects the numbers specified in the markup:</p>
+<ol start="3" style="list-style-type: decimal">
+<li>third item</li>
+<li>fourth item</li>
+<li>fifth item</li>
+</ol>
+<p>The following list does not respect the numbers specified in the markup:</p>
+<ol style="list-style-type: decimal">
+<li>third item</li>
+<li>fourth item</li>
+<li>fifth item</li>
+</ol>
+</blockquote>
+<h5 id="option-tightlists"><span class="header-section-number">2.1.2.2.20</span> Option <code>tightLists</code></h5>
+<dl>
+<dt><code>tightLists</code> (default value: <code>true</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Lists whose bullets do not consist of multiple paragraphs will be passed to the <code>\markdownRendererOlBeginTight</code>, <code>\markdownRendererOlEndTight</code>, <code>\markdownRendererUlBeginTight</code>, <code>\markdownRendererUlEndTight</code>, <code>\markdownRendererDlBeginTight</code>, and <code>\markdownRendererDlEndTight</code> TeX macros.</p>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Lists whose bullets do not consist of multiple paragraphs will be treated the same way as lists that do consist of multiple paragraphs.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="latex-example-19" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+The following list is tight:
+
+  - first item
+  - second item
+  - third item
+
+The following list is loose:
+
+  - first item
+  - second item that spans
+
+    multiple paragraphs
+  - third item
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown*</span>}{tightLists=false}
+The following list is now also loose:
+
+  - first item
+  - second item
+  - third item
+<span class="kw">\end</span>{<span class="ex">markdown*</span>}
+
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>The following list is tight:</p>
+<ul>
+<li>first item</li>
+<li>second item</li>
+<li>third item</li>
+</ul>
+<p>The following list is loose:</p>
+<ul>
+<li>first item</li>
+<li><p>second item that spans</p>
+multiple paragraphs</li>
+<li><p>third item</p></li>
+</ul>
+<p>The following list is now also loose:</p>
+<ul>
+<li><p>first item</p></li>
+<li><p>second item</p></li>
+<li><p>third item</p></li>
+</ul>
+</blockquote>
+<h5 id="option-underscores"><span class="header-section-number">2.1.2.2.21</span> Option <code>underscores</code></h5>
+<dl>
+<dt><code>underscores</code> (default value: <code>true</code>)</dt>
+<dd><dl>
+<dt>true</dt>
+<dd><p>Both underscores and asterisks can be used to denote emphasis and strong emphasis:</p>
+<div class="sourceCode"><pre class="sourceCode md"><code class="sourceCode markdown">*single asterisks*
+_single underscores_
+**double asterisks**
+__double underscores__</code></pre></div>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>false</dt>
+<dd><p>Only asterisks can be used to denote emphasis and strong emphasis. This makes it easy to write math with the  option without the need to constantly escape subscripts.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<h6 id="plain-tex-example-9" class="unnumbered">Plain TeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\input</span> markdown
+<span class="fu">\def</span>\markdownOptionHybrid{true}
+
+<span class="fu">\markdownBegin</span>
+This is _emphasized text_ and this is a math subscript: <span class="ss">$m</span><span class="sc">\_</span><span class="ss">n$</span>.
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\def</span>\markdownOptionUnderscores{false}
+<span class="fu">\markdownBegin</span>
+This is *emphasized text* and this is a math subscript: <span class="ss">$m_n$</span>.
+<span class="fu">\markdownEnd</span>
+
+<span class="fu">\bye</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">luatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>This is <em>emphasized text</em> and this is a math subscript: <em>mₙ</em>.</p>
+<p>This is <em>emphasized text</em> and this is a math subscript: <em>mₙ</em>.</p>
+</blockquote>
+<h6 id="latex-example-20" class="unnumbered">LaTeX example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
+<span class="bu">\usepackage</span>[hybrid]{<span class="ex">markdown</span>}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown</span>}
+This is _emphasized text_ and this is a math subscript: <span class="ss">$m</span><span class="sc">\_</span><span class="ss">n$</span>.
+<span class="kw">\end</span>{<span class="ex">markdown</span>}
+
+<span class="kw">\begin</span>{<span class="ex">markdown*</span>}{underscores=false}
+This is *emphasized text* and this is a math subscript: <span class="ss">$m_n$</span>.
+<span class="kw">\end</span>{<span class="ex">markdown*</span>}
+
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">lualatex</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>This is <em>emphasized text</em> and this is a math subscript: <em>mₙ</em>.</p>
+<p>This is <em>emphasized text</em> and this is a math subscript: <em>mₙ</em>.</p>
+</blockquote>
+<h6 id="context-example-17" class="unnumbered">ConTeXt example</h6>
+<p>Using a text editor, create a text document named <code>document.tex</code> with the following content:</p>
+<div class="sourceCode"><pre class="sourceCode tex"><code class="sourceCode latex"><span class="fu">\usemodule</span>[t][markdown]
+<span class="fu">\def</span>\markdownOptionHybrid{true}
+<span class="fu">\starttext</span>
+
+<span class="fu">\startmarkdown</span>
+This is _emphasized text_ and this is a math subscript: <span class="ss">$m</span><span class="sc">\_</span><span class="ss">n$</span>.
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\def</span>\markdownOptionUnderscores{false}
+<span class="fu">\startmarkdown</span>
+This is *emphasized text* and this is a math subscript: <span class="ss">$m_n$</span>.
+<span class="fu">\stopmarkdown</span>
+
+<span class="fu">\stoptext</span></code></pre></div>
+<p>Next, invoke LuaTeX from the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">context</span> document.tex</code></pre></div>
+<p>A PDF document named <code>document.pdf</code> should be produced and contain the following text:</p>
+<blockquote>
+<p>This is <em>emphasized text</em> and this is a math subscript: <em>mₙ</em>.</p>
+<p>This is <em>emphasized text</em> and this is a math subscript: <em>mₙ</em>.</p>
+</blockquote>
+<h2 id="plain-tex"><span class="header-section-number">2.2</span> Plain TeX</h2>
+<p>The plain TeX macro package provides TeX commands for typesetting markdown documents that invoke the Lua parser in the background. Beside TeX commands that correspond to the Lua options, the macro package also provides commands corresponding to additional plain TeX-specific options, and so-called <em>token renderer</em> commands that define how the individual markdown elements will be typeset.</p>
+<h3 id="interfaces-1"><span class="header-section-number">2.2.1</span> Interfaces</h3>
+<!-- TODO -->
+<h3 id="options-1"><span class="header-section-number">2.2.2</span> Options</h3>
+<!-- TODO -->
+<h3 id="token-renderers"><span class="header-section-number">2.2.3</span> Token renderers</h3>
+<!-- TODO -->
+<h2 id="latex"><span class="header-section-number">2.3</span> LaTeX</h2>
+<p>The LaTeX macro package provides additional syntactic sugar on top of the plain TeX macro package and provides sane default definitions of the token renderers.</p>
+<!-- TODO -->
+<h3 id="interfaces-2"><span class="header-section-number">2.3.1</span> Interfaces</h3>
+<!-- TODO -->
+<h3 id="options-2"><span class="header-section-number">2.3.2</span> Options</h3>
+<!-- TODO -->
+<h3 id="token-renderers-1"><span class="header-section-number">2.3.3</span> Token renderers</h3>
+<!-- TODO -->
+<h2 id="context"><span class="header-section-number">2.4</span> ConTeXt</h2>
+<p>The ConTeXt macro package provides additional syntactic sugar on top of the plain TeX macro package and provides sane default definitions of the token renderers.</p>
+<h3 id="interfaces-3"><span class="header-section-number">2.4.1</span> Interfaces</h3>
+<!-- TODO -->
+<h3 id="options-3"><span class="header-section-number">2.4.2</span> Options</h3>
+<!-- TODO -->
+<h3 id="token-renderers-2"><span class="header-section-number">2.4.3</span> Token renderers</h3>
+<!-- TODO -->
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Here is the footnote.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Here's one with multiple blocks.</p>
+<p>Subsequent paragraphs are indented to show that they belong to the previous footnote.</p>
+<pre><code>{ some.code }</code></pre>
+<p>The whole paragraph can be indented, or just the first line. In this way, multi-paragraph footnotes work like multi-paragraph list items.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>Here is the footnote.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>Here's one with multiple blocks.</p>
+<p>Subsequent paragraphs are indented to show that they belong to the previous footnote.</p>
+<pre><code>{ some.code }</code></pre>
+<p>The whole paragraph can be indented, or just the first line. In this way, multi-paragraph footnotes work like multi-paragraph list items.<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>Inlines notes are easier to write, since you don't have to pick an identifier and move down to type the note.<a href="#fnref5">↩</a></p></li>
+<li id="fn6"><p>Inlines notes are easier to write, since you don't have to pick an identifier and move down to type the note.<a href="#fnref6">↩</a></p></li>
+</ol>
+</div>
+</body>
+</html>
