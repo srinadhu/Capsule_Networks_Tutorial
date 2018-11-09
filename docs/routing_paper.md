@@ -33,7 +33,7 @@ We want the length of the output vector to represent the probability of feature.
 
 ![squash](./images/squash.png)
 
-Except the first layer of capsules $$e^{i\pi} + 1 = 0$$
+![rt](./images/rt.png)
 
 
 Capsules have two main features as described below:
